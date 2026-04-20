@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.reader.ReaderActivity">
+
+    <!-- 主内容容器 -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- 主内容区域 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- 顶部留空 -->
+            <TextView
+                android:id="@+id/tv_page_ceiling"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:textAlignment="center"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"/>
+
+            <com.example.novelreader.ui.reader.PageView
+                android:id="@+id/page_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/background" />
+
+            <!-- 页码指示器 -->
+            <TextView
+                android:id="@+id/tv_page_indicator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textAlignment="center"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                tools:text="1/100" />
+        </LinearLayout>
+
+        <!-- 顶部菜单（初始隐藏） -->
+        <LinearLayout
+            android:id="@+id/top_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#CC2196F3"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_menu_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="小说名 - 章节名" />
+        </LinearLayout>
+
+        <!-- 底部菜单（初始隐藏） -->
+        <LinearLayout
+            android:id="@+id/bottom_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="#CC2196F3"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="6dp"
+            android:visibility="gone">
+
+            <!-- 返回按钮 -->
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground"
+                android:src="@drawable/ic_return"
+                android:contentDescription="@string/back_to_library" />
+
+            <!-- 章节按钮 -->
+            <ImageButton
+                android:id="@+id/btn_chapter"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground"
+                android:src="@drawable/ic_chapter"
+                android:contentDescription="@string/chapter_list" />
+
+            <!-- 字体减小 -->
+            <ImageButton
+                android:id="@+id/btn_font_decrease"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground"
+                android:src="@drawable/ic_text_decrease"
+                android:contentDescription="@string/font_decrease" />
+
+            <!-- 字体增大 -->
+            <ImageButton
+                android:id="@+id/btn_font_increase"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground"
+                android:src="@drawable/ic_text_increase"
+                android:contentDescription="@string/font_increase" />
+
+            <!-- 主题切换 -->
+            <ImageButton
+                android:id="@+id/btn_theme"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground"
+                android:src="@drawable/ic_theme"
+                android:contentDescription="@string/theme_switch" />
+
+            <!-- 笔记 -->
+            <ImageButton
+                android:id="@+id/btn_notes"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground"
+                android:src="@drawable/ic_notes_list"
+                android:contentDescription="@string/notes_list" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <!-- 侧边栏目录 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_chapters"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/surface"
+        android:scrollbars="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_chapter" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

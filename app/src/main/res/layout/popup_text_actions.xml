@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_popup_actions"
+    android:orientation="horizontal"
+    android:padding="4dp"
+    android:elevation="8dp">
+
+    <LinearLayout
+        android:id="@+id/action_highlight"
+        android:layout_width="64dp"
+        android:layout_height="56dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="4dp"
+        android:background="?selectableItemBackground">
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/ic_highlight"
+            android:contentDescription="高亮" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="高亮"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            android:layout_marginTop="2dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/action_note"
+        android:layout_width="64dp"
+        android:layout_height="56dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="4dp"
+        android:background="?selectableItemBackground">
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/ic_note_add"
+            android:contentDescription="笔记" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="笔记"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            android:layout_marginTop="2dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/action_copy"
+        android:layout_width="64dp"
+        android:layout_height="56dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="4dp"
+        android:background="?selectableItemBackground">
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@android:drawable/ic_menu_share"
+            android:contentDescription="复制" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="复制"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            android:layout_marginTop="2dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/action_cancel"
+        android:layout_width="64dp"
+        android:layout_height="56dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="4dp"
+        android:background="?selectableItemBackground">
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:contentDescription="取消" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            android:layout_marginTop="2dp" />
+    </LinearLayout>
+
+</LinearLayout>

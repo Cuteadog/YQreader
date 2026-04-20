@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">YQreader</string>
+    <string name="manage">管理</string>
+    <string name="import_novel">导入</string>
+    <string name="delete">删除</string>
+    <string name="cancel">取消</string>
+    <string name="select_folder">选择文件夹</string>
+    <string name="select_folder_message">请选择包含小说文件的文件夹</string>
+    <string name="no_novels">暂无小说，请点击下方导入按钮添加小说</string>
+    <string name="back_to_library">↩</string>
+    <string name="chapter_list">章节栏</string>>
+    <string name="font_increase">A+</string>
+    <string name="font_decrease">A-</string>
+    <string name="theme_switch">主题</string>
+    <string name="notes_list">笔记</string>
+    <string name="note_highlight">我的笔记与高亮</string>
+</resources>

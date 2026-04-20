@@ -1,0 +1,47 @@
+# Gradle 构建文件和缓存
+.gradle/
+build/
+
+# 本地配置文件
+local.properties
+
+# Android Studio 和 IntelliJ IDEA 的配置文件
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Android Studio 缓存文件
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.cxx/
+.externalNativeBuild/
+
+# 构建产物
+*.aab
+*.ap_
+*.dex
+*.class
+
+# 签名文件
+*.jks
+*.keystore
+
+# 日志和性能分析文件
+*.log
+*.hprof
+
+# 操作系统生成的文件
+.DS_Store
+Thumbs.db
+
+# 本地文件
+app/build/
+.claude/
+.vscode/
+examples/
+updates/
+dialog.txt
+log.txt
