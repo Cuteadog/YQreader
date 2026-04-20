@@ -17,12 +17,14 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
+        android:gravity="center_vertical"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_cover"
         app:layout_constraintEnd_toStartOf="@+id/cb_select"
         app:layout_constraintStart_toEndOf="@+id/iv_cover"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/iv_cover">
 
         <TextView
             android:id="@+id/tv_title"
@@ -39,6 +41,7 @@
             android:id="@+id/tv_author"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@color/text_secondary"
@@ -49,8 +52,7 @@
             android:id="@+id/tv_last_read"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@color/text_secondary"
@@ -63,6 +65,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="4dp"
+        android:buttonTint="@color/primary"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

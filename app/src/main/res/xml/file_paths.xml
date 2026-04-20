@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 内部 cache 下用于分享的图片目录 -->
+    <cache-path
+        name="share_cache"
+        path="share/" />
+    <!-- 外部 Pictures 目录，用于"保存"的图片 -->
+    <external-files-path
+        name="share_external"
+        path="Pictures/" />
+</paths>

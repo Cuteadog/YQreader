@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/notes_sheet_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@android:color/white">
 
     <LinearLayout
+        android:id="@+id/notes_sheet_header"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:orientation="horizontal"
@@ -15,6 +17,7 @@
         android:paddingEnd="8dp"
         android:background="#F5F5F5">
         <TextView
+            android:id="@+id/tv_notes_sheet_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -28,6 +31,7 @@
             android:layout_height="match_parent"
             android:outlineSpotShadowColor="@color/cardview_dark_background"
             android:background="@android:color/transparent"
+            app:tabRippleColor="@null"
             app:tabTextAppearance="@style/MyTabTextAppearance" />
     </LinearLayout>
 

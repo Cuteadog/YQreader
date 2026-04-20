@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- 基础应用主题 -->
-    <style name="Theme.NovelReader" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.NovelReader" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primary_dark</item>
         <item name="colorOnPrimary">@android:color/white</item>
@@ -14,11 +14,17 @@
         <item name="android:windowBackground">@color/background</item>
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorSecondary">@color/text_secondary</item>
+        <!-- 统一由 ThemeManager 接管，禁用系统强制深色 -->
+        <item name="android:forceDarkAllowed" tools:targetApi="29">false</item>
+        <!-- 系统栏透明：Edge-to-Edge 所需，由 SystemUiHelper 调整图标色 -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
     </style>
 
-    <!-- 阅读界面主题 -->
+    <!-- 阅读界面主题：与基础主题一致，由 SystemUiHelper.enterImmersive 进入沉浸模式 -->
     <style name="Theme.NovelReader.Reader" parent="Theme.NovelReader">
-        <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowActionBarOverlay">true</item>
     </style>

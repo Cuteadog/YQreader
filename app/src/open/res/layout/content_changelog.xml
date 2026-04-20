@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/changelog_scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/changelog_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="18dp"
+        android:paddingBottom="24dp">
+
+        <!-- ============== 版本 1.1 模块 ============== -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 头部：版本号 + 日期 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="版本 1.1"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:tag="date"
+                    android:text="2026-04-18"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <!-- 新增 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="新增"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  笔记详情新增“分享”按钮：可选文本或图片两种方式分享；图片支持多种内置背景模板、本地导入背景，可保存到相册或转发到其它应用"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  分享背景模板栏：导入的本地图以“本地N”形式持久保存，缩略图右上角小叉号可一键移除"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  设置页“储存位置”可切换：内置（应用私有目录）/ 外部（/Android/data/包名/）；切换时自动迁移已有小说与分享背景"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  系统栏全透明：非阅读页采用 Edge-to-Edge，内容延伸到屏幕边缘；阅读页采用 Immersive Mode，从边缘上滑可临时唤出"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  构建配置：所有风味的 APK 同时复制到项目根目录 outputs/ 下，便于分发"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  新增“主题”按钮：日间 / 护眼 / 夜间一键切换，所有界面同步换色；主页切换时背景平滑过渡"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  主页顶部新增“我的书架”与“所有笔记”两个标签"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  全新“所有笔记”页：按“书籍 &gt; 章节 &gt; 笔记”分组浏览，支持折叠、批量管理、批量删除、导出为 txt"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  新增“笔记详情”页：查看原文与笔记，一键跳转到原文位置"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  删除书籍时自动清理其关联的高亮与笔记"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  设置页扩充：阅读方式 / 自动切章占位项、使用教程、关于我们、更新日志"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  长按文字弹出局部“放大镜”，方便看清选取位置"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  长按已有高亮可整块选中；拖动时自动吸附到高亮边界"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  选区与已有高亮重叠时，弹出菜单新增“删除”按钮，“高亮”变“改色”、“笔记”变“编辑”"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  高亮与笔记合二为一：同一段原文不再重复记录"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  高亮列表显示所在章节"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <!-- 修复 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="修复"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  从笔记详情“跳转到原文位置”进入小说后，再返回时回到笔记详情，而不是直接退到书架"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  personal 风味的设置页固定为日间主题，不再因阅读页主题而变色"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  打开小说时不再出现“白色 → 主题色”的闪烁"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  改色弹窗、笔记编辑弹窗、底部“笔记与高亮”面板现已跟随主题"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  “储存位置”切换弹窗、迁移进度弹窗与失败提示已统一 3 色主题"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  主页 / 设置页 / 笔记详情等页顶部栏高度改为自适应，状态栏透明后标题与图标不再被挤压"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  阅读界面单击屏幕呼出菜单时不再同时弹出系统栏，避免遮挡内部菜单"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  阅读界面三个操作按钮的点击阴影不再互相重叠"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  长按文字时不再整页放大"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  拖动手柄可反复进行；拖动时不再误呼出侧边栏；操作菜单自动隐藏，松手后恢复"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  选单字 / 选到行尾 / 选区贴近页面边缘时，手柄不再错位或被裁掉"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  行末高亮不再出现 1 像素细线或整块不显示"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  取消选中后可再次触发选中（原本翻页动画结束后状态会卡住）"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  操作菜单在刘海 / 状态栏真机上不再位置偏移"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  翻页完成后不再短暂闪现上一页"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  屏蔽系统深色模式强行反色"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  书架条目右侧信息垂直居中；修复复选框在部分真机不可见、撑高短条目的问题"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+        </LinearLayout>
+
+        <!-- 模块间细线分隔（当有新版本时在此插入）
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:tag="divider"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp" />
+        -->
+
+    </LinearLayout>
+</ScrollView>

@@ -30,11 +30,35 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.reader.ReaderActivity"
+            android:name="${readerActivityClass}"
             android:exported="false"
             android:theme="@style/Theme.NovelReader.Reader" />
 
+        <activity
+            android:name=".ui.settings.SettingsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.NovelReader" />
+        <activity
+            android:name=".ui.settings.UserGuideActivity"
+            android:exported="false"
+            android:theme="@style/Theme.NovelReader" />
+        <activity
+            android:name=".ui.settings.AboutUsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.NovelReader" />
+
         <!-- ImportWorker不需要在Manifest中声明 -->
+
+        <!-- FileProvider：用于分享生成的图片 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

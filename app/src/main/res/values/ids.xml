@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Open flavor main page IDs (declared here so both flavors compile) -->
+    <item name="title_bar" type="id" />
+    <item name="tab_bookshelf" type="id" />
+    <item name="tab_notes" type="id" />
+    <item name="btn_theme" type="id" />
+    <item name="btn_settings" type="id" />
+    <item name="fragment_notes_container" type="id" />
+
+    <!-- 设置页面 open 专属项 ID（personal 编译也能通过） -->
+    <item name="section_reading" type="id" />
+    <item name="row_reading_mode" type="id" />
+    <item name="row_auto_switch_chapter" type="id" />
+    <item name="tv_reading_mode_value" type="id" />
+    <item name="switch_auto_switch_chapter" type="id" />
+    <item name="row_changelog" type="id" />
+    <item name="tv_changelog_version" type="id" />
+
+    <!-- 设置页面主题化所需的 open 专属 ID -->
+    <item name="group_reading" type="id" />
+    <item name="divider_reading" type="id" />
+    <item name="tv_reading_mode_label" type="id" />
+    <item name="tv_auto_switch_label" type="id" />
+    <item name="iv_reading_mode_chevron" type="id" />
+    <item name="divider_changelog" type="id" />
+    <item name="tv_changelog_label" type="id" />
+    <item name="iv_changelog_chevron" type="id" />
+</resources>

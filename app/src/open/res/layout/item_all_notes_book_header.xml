@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/book_header_row"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/surface"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="8dp">
+
+        <!-- 管理模式：折叠图标移到左侧 -->
+        <ImageView
+            android:id="@+id/iv_toggle_left"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="6dp"
+            android:src="@drawable/ic_expand_more"
+            android:visibility="gone"
+            app:tint="@color/text_secondary" />
+
+        <!-- 书名 -->
+        <TextView
+            android:id="@+id/tv_book_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <!-- 正常模式：折叠按钮（图标 + 共xx条） -->
+        <LinearLayout
+            android:id="@+id/btn_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="?selectableItemBackground"
+            android:gravity="center_vertical"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <ImageView
+                android:id="@+id/iv_toggle"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_expand_more"
+                app:tint="@color/text_secondary" />
+
+            <TextView
+                android:id="@+id/tv_note_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- 管理模式：复选框 -->
+        <CheckBox
+            android:id="@+id/cb_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="4dp"
+            android:buttonTint="@color/primary"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- 底部细线 -->
+    <View
+        android:id="@+id/header_divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#E0E0E0" />
+</LinearLayout>

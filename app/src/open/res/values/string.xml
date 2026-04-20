@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">YQreader(open)</string>
+    <string name="tab_bookshelf">我的书架</string>
+    <string name="tab_all_notes">所有笔记</string>
+    <string name="notes_coming_soon">笔记功能即将推出</string>
+    <string name="no_notes_yet">暂无笔记</string>
+    <string name="export_notes">导出</string>
+    <string name="note_detail">笔记详情</string>
+    <string name="share">分享</string>
+    <string name="original_text">原文</string>
+    <string name="note_label">笔记</string>
+    <string name="jump_to_source">跳转到原文位置</string>
+    <string name="share_as_text">以文本格式分享</string>
+    <string name="share_as_image">以图片格式分享</string>
+    <string name="share_title">分享笔记</string>
+    <string name="share_image_title">图片分享</string>
+    <string name="share_template">模板</string>
+    <string name="share_save">保存</string>
+    <string name="share_hide_thoughts">隐藏想法</string>
+    <string name="share_from_yqreader">来自 YQreader</string>
+    <string name="share_recorded_on">摘录于</string>
+    <string name="share_written_on">写于</string>
+</resources>

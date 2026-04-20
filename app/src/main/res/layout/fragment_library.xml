@@ -5,16 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- 顶部工具栏 -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/app_name"
-        app:titleTextColor="@android:color/white" />
+    <!-- 标题栏已移至 activity_main.xml -->
 
     <!-- 小说列表 -->
     <androidx.recyclerview.widget.RecyclerView
@@ -23,7 +14,7 @@
         android:layout_height="0dp"
         android:padding="16dp"
         app:layout_constraintBottom_toTopOf="@+id/button_bar"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_novel" />
 
     <!-- 空状态提示 -->
@@ -35,17 +26,19 @@
         android:orientation="vertical"
         android:padding="32dp"
         app:layout_constraintBottom_toTopOf="@+id/button_bar"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible"
         tools:ignore="UseCompoundDrawables">
 
         <ImageView
+            android:id="@+id/iv_empty_icon"
             android:layout_width="128dp"
             android:layout_height="128dp"
             android:src="@drawable/ic_book_placeholder"
             app:tint="@color/text_secondary" />
 
         <TextView
+            android:id="@+id/tv_empty_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

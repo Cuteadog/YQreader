@@ -5,23 +5,57 @@ plugins {
 }
 
 android {
-    namespace 'com.example.novelreader'
+    namespace 'com.cuteadog.novelreader'
     compileSdk 33
 
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
             outputFileName = "YQreader-${variant.name}.apk"
         }
+
+        // 构建完成后，把所有风味的 APK 收敛到项目根目录 outputs/ 下
+        variant.assembleProvider.configure { assembleTask ->
+            assembleTask.doLast {
+                def targetDir = new File(rootProject.projectDir, "outputs")
+                targetDir.mkdirs()
+                variant.outputs.each { out ->
+                    def src = out.outputFile
+                    if (src?.exists()) {
+                        def dest = new File(targetDir, src.name)
+                        dest.bytes = src.bytes
+                        println "APK 已复制到 ${dest}"
+                    }
+                }
+            }
+        }
     }
 
     defaultConfig {
-        applicationId "com.example.novelreader"
+        applicationId "com.cuteadog.novelreader"
         minSdk 26
         targetSdk 33
         versionCode 1
-        versionName "1.0"
-
+        versionName "1.1"
+        flavorDimensions "version"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    productFlavors {
+        personal {
+            dimension "version"
+            applicationIdSuffix ".private"
+            versionNameSuffix "-personal"
+            buildConfigField "boolean", "ENABLE_THEME_SWITCH", "true"
+            buildConfigField "boolean", "ENABLE_NOTES_HIGHLIGHT", "false"
+            manifestPlaceholders["readerActivityClass"] = "com.cuteadog.novelreader.ui.reader.ReaderActivity"
+        }
+        open {
+            dimension "version"
+            versionNameSuffix "-open"
+            buildConfigField "boolean", "ENABLE_THEME_SWITCH", "false"
+            buildConfigField "boolean", "ENABLE_NOTES_HIGHLIGHT", "true"
+            manifestPlaceholders["readerActivityClass"] = "com.cuteadog.novelreader.ui.reader.ReaderActivityOpen"
+        }
     }
 
     buildTypes {

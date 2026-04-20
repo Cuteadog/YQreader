@@ -14,7 +14,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="4dp"
-        android:background="?selectableItemBackground">
+        android:background="@drawable/bg_action_ripple_compact">
         <ImageView
             android:layout_width="22dp"
             android:layout_height="22dp"
@@ -36,7 +36,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="4dp"
-        android:background="?selectableItemBackground">
+        android:background="@drawable/bg_action_ripple_compact">
         <ImageView
             android:layout_width="22dp"
             android:layout_height="22dp"
@@ -58,11 +58,11 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="4dp"
-        android:background="?selectableItemBackground">
+        android:background="@drawable/bg_action_ripple_compact">
         <ImageView
             android:layout_width="22dp"
             android:layout_height="22dp"
-            android:src="@android:drawable/ic_menu_share"
+            android:src="@drawable/ic_copy"
             android:contentDescription="复制" />
         <TextView
             android:layout_width="wrap_content"
@@ -80,7 +80,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="4dp"
-        android:background="?selectableItemBackground">
+        android:background="@drawable/bg_action_ripple_compact">
         <ImageView
             android:layout_width="22dp"
             android:layout_height="22dp"
