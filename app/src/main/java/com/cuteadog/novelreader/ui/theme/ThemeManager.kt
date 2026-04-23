@@ -1,5 +1,9 @@
 package com.cuteadog.novelreader.ui.theme
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Color
 import androidx.datastore.preferences.core.edit
@@ -27,7 +31,11 @@ object ThemeManager {
     private var initialized = false
 
     private val listeners = mutableListOf<(Int) -> Unit>()
+    private val paletteTickListeners = mutableListOf<(ThemePalette) -> Unit>()
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
+    /** 主题切换动画时长，与 MainActivity animateBackground 原有时长保持一致 */
+    const val THEME_TRANSITION_DURATION_MS = 400L
 
     fun ensureInit(context: Context) {
         if (initialized) return
@@ -56,7 +64,26 @@ object ThemeManager {
             THEME_EYE -> THEME_NIGHT
             else -> THEME_DAY
         }
-        setAndSave(context, next)
+        val from = ThemePalette.forTheme(cachedTheme)
+        val to = ThemePalette.forTheme(next)
+        val hasTickSubscribers = synchronized(paletteTickListeners) { paletteTickListeners.isNotEmpty() }
+        if (hasTickSubscribers) {
+            ValueAnimator.ofFloat(0f, 1f).apply {
+                duration = THEME_TRANSITION_DURATION_MS
+                addUpdateListener {
+                    val f = it.animatedValue as Float
+                    notifyTick(ThemePalette.blend(from, to, f))
+                }
+                addListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        setAndSave(context, next)
+                    }
+                })
+                start()
+            }
+        } else {
+            setAndSave(context, next)
+        }
         return next
     }
 
@@ -77,9 +104,22 @@ object ThemeManager {
         synchronized(listeners) { listeners.remove(listener) }
     }
 
+    fun addPaletteTickListener(listener: (ThemePalette) -> Unit) {
+        synchronized(paletteTickListeners) { paletteTickListeners.add(listener) }
+    }
+
+    fun removePaletteTickListener(listener: (ThemePalette) -> Unit) {
+        synchronized(paletteTickListeners) { paletteTickListeners.remove(listener) }
+    }
+
     private fun notifyListeners() {
         val snapshot = synchronized(listeners) { listeners.toList() }
         snapshot.forEach { it(cachedTheme) }
+    }
+
+    private fun notifyTick(palette: ThemePalette) {
+        val snapshot = synchronized(paletteTickListeners) { paletteTickListeners.toList() }
+        snapshot.forEach { it(palette) }
     }
 }
 
@@ -101,6 +141,30 @@ data class ThemePalette(
     val iconRes: Int
 ) {
     companion object {
+        private val argbEvaluator = ArgbEvaluator()
+
+        private fun lerpColor(from: Int, to: Int, fraction: Float): Int =
+            argbEvaluator.evaluate(fraction, from, to) as Int
+
+        /** 在两个主题间按 [fraction]∈[0,1] 做颜色插值；非颜色字段（如 iconRes、theme）直接取终值。 */
+        fun blend(from: ThemePalette, to: ThemePalette, fraction: Float): ThemePalette = ThemePalette(
+            theme = if (fraction >= 1f) to.theme else from.theme,
+            pageBg = lerpColor(from.pageBg, to.pageBg, fraction),
+            surfaceBg = lerpColor(from.surfaceBg, to.surfaceBg, fraction),
+            groupBg = lerpColor(from.groupBg, to.groupBg, fraction),
+            textPrimary = lerpColor(from.textPrimary, to.textPrimary, fraction),
+            textSecondary = lerpColor(from.textSecondary, to.textSecondary, fraction),
+            titleBarBg = lerpColor(from.titleBarBg, to.titleBarBg, fraction),
+            titleBarFg = lerpColor(from.titleBarFg, to.titleBarFg, fraction),
+            titleBarFgMuted = lerpColor(from.titleBarFgMuted, to.titleBarFgMuted, fraction),
+            dividerColor = lerpColor(from.dividerColor, to.dividerColor, fraction),
+            buttonBg = lerpColor(from.buttonBg, to.buttonBg, fraction),
+            buttonFg = lerpColor(from.buttonFg, to.buttonFg, fraction),
+            popupBg = lerpColor(from.popupBg, to.popupBg, fraction),
+            popupFg = lerpColor(from.popupFg, to.popupFg, fraction),
+            iconRes = if (fraction >= 0.5f) to.iconRes else from.iconRes
+        )
+
         fun forTheme(theme: Int): ThemePalette = when (theme) {
             ThemeManager.THEME_EYE -> ThemePalette(
                 theme = theme,
@@ -143,11 +207,11 @@ data class ThemePalette(
                 groupBg = Color.parseColor("#F5F5F5"),
                 textPrimary = Color.parseColor("#212121"),
                 textSecondary = Color.parseColor("#757575"),
-                titleBarBg = Color.parseColor("#2196F3"),
+                titleBarBg = Color.parseColor("#4DABF5"),   // equal to #CC2196F3
                 titleBarFg = Color.parseColor("#FFFFFF"),
                 titleBarFgMuted = Color.parseColor("#B3FFFFFF"),
                 dividerColor = Color.parseColor("#E0E0E0"),
-                buttonBg = Color.parseColor("#2196F3"),
+                buttonBg = Color.parseColor("#4DABF5"),
                 buttonFg = Color.parseColor("#FFFFFF"),
                 popupBg = Color.parseColor("#DD1A1A2E"),
                 popupFg = Color.parseColor("#FFFFFF"),

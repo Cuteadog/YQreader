@@ -90,15 +90,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="•  构建配置：所有风味的 APK 同时复制到项目根目录 outputs/ 下，便于分发"
-                android:textSize="14sp"
-                android:lineSpacingExtra="3dp"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="•  新增“主题”按钮：日间 / 护眼 / 夜间一键切换，所有界面同步换色；主页切换时背景平滑过渡"
+                android:text="•  “主题大一统”：日间 / 护眼 / 夜间一键切换，所有界面同步换色；主页切换时背景平滑过渡"
                 android:textSize="14sp"
                 android:lineSpacingExtra="3dp"
                 android:layout_marginBottom="8dp" />
@@ -204,14 +196,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="•  personal 风味的设置页固定为日间主题，不再因阅读页主题而变色"
-                android:textSize="14sp"
-                android:lineSpacingExtra="3dp"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="•  打开小说时不再出现“白色 → 主题色”的闪烁"
                 android:textSize="14sp"
                 android:lineSpacingExtra="3dp"
@@ -228,7 +212,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="•  “储存位置”切换弹窗、迁移进度弹窗与失败提示已统一 3 色主题"
+                android:text="•  “储存位置”切换弹窗、迁移进度弹窗与失败提示现已跟随主题"
                 android:textSize="14sp"
                 android:lineSpacingExtra="3dp"
                 android:layout_marginBottom="8dp" />
@@ -245,22 +229,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="•  阅读界面单击屏幕呼出菜单时不再同时弹出系统栏，避免遮挡内部菜单"
-                android:textSize="14sp"
-                android:lineSpacingExtra="3dp"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="•  阅读界面三个操作按钮的点击阴影不再互相重叠"
-                android:textSize="14sp"
-                android:lineSpacingExtra="3dp"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="•  长按文字时不再整页放大"
                 android:textSize="14sp"
                 android:lineSpacingExtra="3dp"
                 android:layout_marginBottom="8dp" />
@@ -300,31 +268,65 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="•  操作菜单在刘海 / 状态栏真机上不再位置偏移"
+                android:text="•  屏蔽系统主题颜色"
                 android:textSize="14sp"
                 android:lineSpacingExtra="3dp"
                 android:layout_marginBottom="8dp" />
 
-            <TextView
+        </LinearLayout>
+
+        <!-- 模块间细线分隔 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:tag="divider"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp" />
+
+        <!-- ============== 版本 1.2 模块 ============== -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 头部：版本号 + 日期 -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="•  翻页完成后不再短暂闪现上一页"
-                android:textSize="14sp"
-                android:lineSpacingExtra="3dp"
-                android:layout_marginBottom="8dp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="版本 1.2.1"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:tag="date"
+                    android:text="2026-04-23"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <!-- 新增 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="新增"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="6dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="•  屏蔽系统深色模式强行反色"
-                android:textSize="14sp"
-                android:lineSpacingExtra="3dp"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="•  书架条目右侧信息垂直居中；修复复选框在部分真机不可见、撑高短条目的问题"
+                android:text="•  书架每本书、所有笔记每个模块改为独立气泡框，气泡底色沿用原顶栏色；顶栏现在贴近页面背景"
                 android:textSize="14sp"
                 android:lineSpacingExtra="3dp"
                 android:layout_marginBottom="8dp" />

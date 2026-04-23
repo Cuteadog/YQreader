@@ -1,6 +1,7 @@
 package com.cuteadog.novelreader.ui.notes
 
 import android.content.res.ColorStateList
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,6 +57,47 @@ class AllNotesAdapter(
     fun updatePalette(newPalette: ThemePalette) {
         palette = newPalette
         notifyDataSetChanged()
+    }
+
+    /**
+     * 主题过渡动画期间：原地更新可见 item 的气泡底色与文字色，避免 notifyDataSetChanged 的闪烁。
+     * 不可见 item 会在滑入时通过 bind()/applyBookBubble() 取最新 palette。
+     */
+    fun applyLivePalette(rv: RecyclerView, newPalette: ThemePalette) {
+        palette = newPalette
+        for (i in 0 until rv.childCount) {
+            val child = rv.getChildAt(i)
+            val bg = child.background as? GradientDrawable
+            bg?.setColor(newPalette.titleBarBg)
+
+            // BookHeader
+            child.findViewById<View>(R.id.header_divider)
+                ?.setBackgroundColor(newPalette.dividerColor)
+            child.findViewById<TextView>(R.id.tv_book_title)
+                ?.setTextColor(newPalette.titleBarFg)
+            child.findViewById<TextView>(R.id.tv_note_count)
+                ?.setTextColor(newPalette.titleBarFgMuted)
+            child.findViewById<ImageView>(R.id.iv_toggle)
+                ?.setColorFilter(newPalette.titleBarFgMuted)
+            child.findViewById<ImageView>(R.id.iv_toggle_left)
+                ?.setColorFilter(newPalette.titleBarFgMuted)
+
+            // ChapterDivider
+            child.findViewById<View>(R.id.chapter_divider_line)
+                ?.setBackgroundColor(newPalette.dividerColor)
+            child.findViewById<TextView>(R.id.tv_chapter_title)
+                ?.setTextColor(newPalette.titleBarFgMuted)
+
+            // NoteEntry
+            child.findViewById<TextView>(R.id.tv_selected_text)
+                ?.setTextColor(newPalette.titleBarFg)
+            child.findViewById<TextView>(R.id.tv_note_content)
+                ?.setTextColor(newPalette.titleBarFgMuted)
+
+            // CheckBox（三种 VH 共用 id）
+            child.findViewById<CheckBox>(R.id.cb_select)?.buttonTintList =
+                ColorStateList.valueOf(newPalette.titleBarFg)
+        }
     }
 
     fun updateItems(newItems: List<AllNotesItem>) {
@@ -168,6 +210,42 @@ class AllNotesAdapter(
             is AllNotesItem.ChapterDivider -> (holder as ChapterDividerVH).bind(item)
             is AllNotesItem.NoteEntry -> (holder as NoteEntryVH).bind(item)
         }
+        applyBookBubble(holder.itemView, position)
+    }
+
+    /** 判定是否为同一本书气泡的首条（当前条为 BookHeader） */
+    private fun isFirstInBookBubble(position: Int): Boolean =
+        items[position] is AllNotesItem.BookHeader
+
+    /** 判定是否为同一本书气泡的末条（下一条是新书的 BookHeader 或列表末尾） */
+    private fun isLastInBookBubble(position: Int): Boolean =
+        position == items.size - 1 || items[position + 1] is AllNotesItem.BookHeader
+
+    /** 为列表每条目贴气泡背景（同一本书共享一个圆角矩形气泡，首/末条圆角，中间条为直角） */
+    private fun applyBookBubble(itemView: View, position: Int) {
+        val density = itemView.resources.displayMetrics.density
+        val r = 16f * density
+        val first = isFirstInBookBubble(position)
+        val last = isLastInBookBubble(position)
+        val corners = when {
+            first && last -> floatArrayOf(r, r, r, r, r, r, r, r)
+            first -> floatArrayOf(r, r, r, r, 0f, 0f, 0f, 0f)
+            last -> floatArrayOf(0f, 0f, 0f, 0f, r, r, r, r)
+            else -> FloatArray(8)
+        }
+        itemView.background = GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            setColor(palette.titleBarBg)
+            cornerRadii = corners
+        }
+        val lp = itemView.layoutParams as? ViewGroup.MarginLayoutParams ?: return
+        val side = (12 * density).toInt()
+        val gap = (6 * density).toInt()
+        lp.leftMargin = side
+        lp.rightMargin = side
+        lp.topMargin = if (first) gap else 0
+        lp.bottomMargin = if (last) gap else 0
+        itemView.layoutParams = lp
     }
 
     inner class BookHeaderVH(view: View) : RecyclerView.ViewHolder(view) {
@@ -183,13 +261,14 @@ class AllNotesAdapter(
         fun bind(item: AllNotesItem.BookHeader) {
             tvBookTitle.text = item.novelTitle
 
-            row.setBackgroundColor(palette.surfaceBg)
+            // 内层行底色透明，让外层气泡 (titleBarBg) 透出
+            row.setBackgroundColor(android.graphics.Color.TRANSPARENT)
             divider.setBackgroundColor(palette.dividerColor)
-            tvBookTitle.setTextColor(palette.textPrimary)
-            tvNoteCount.setTextColor(palette.textSecondary)
-            ivToggle.setColorFilter(palette.textSecondary)
-            ivToggleLeft.setColorFilter(palette.textSecondary)
-            cbSelect.buttonTintList = ColorStateList.valueOf(palette.buttonBg)
+            tvBookTitle.setTextColor(palette.titleBarFg)
+            tvNoteCount.setTextColor(palette.titleBarFgMuted)
+            ivToggle.setColorFilter(palette.titleBarFgMuted)
+            ivToggleLeft.setColorFilter(palette.titleBarFgMuted)
+            cbSelect.buttonTintList = ColorStateList.valueOf(palette.titleBarFg)
 
             val toggleIcon = if (item.isCollapsed) R.drawable.ic_expand_more else R.drawable.ic_expand_less
 
@@ -233,10 +312,9 @@ class AllNotesAdapter(
         fun bind(item: AllNotesItem.ChapterDivider) {
             tvChapterTitle.text = item.chapterTitle
 
-            itemView.setBackgroundColor(palette.pageBg)
             line.setBackgroundColor(palette.dividerColor)
-            tvChapterTitle.setTextColor(palette.textSecondary)
-            cbSelect.buttonTintList = ColorStateList.valueOf(palette.buttonBg)
+            tvChapterTitle.setTextColor(palette.titleBarFgMuted)
+            cbSelect.buttonTintList = ColorStateList.valueOf(palette.titleBarFg)
 
             if (isSelectionMode) {
                 cbSelect.visibility = View.VISIBLE
@@ -263,10 +341,9 @@ class AllNotesAdapter(
             colorBar.setBackgroundColor(item.highlight.color)
             tvSelectedText.text = item.highlight.selectedText
 
-            itemView.setBackgroundColor(palette.pageBg)
-            tvSelectedText.setTextColor(palette.textPrimary)
-            tvNoteContent.setTextColor(palette.textSecondary)
-            cbSelect.buttonTintList = ColorStateList.valueOf(palette.buttonBg)
+            tvSelectedText.setTextColor(palette.titleBarFg)
+            tvNoteContent.setTextColor(palette.titleBarFgMuted)
+            cbSelect.buttonTintList = ColorStateList.valueOf(palette.titleBarFg)
 
             if (item.highlight.isNote) {
                 tvNoteContent.visibility = View.VISIBLE

@@ -52,6 +52,11 @@ class AllNotesFragment(
         applyTheme(ThemeManager.currentPalette())
     }
 
+    /** 主题过渡动画每帧调用：原地刷新可见颜色，避免 notifyDataSetChanged 的闪烁。 */
+    private val paletteTickListener: (ThemePalette) -> Unit = { palette ->
+        if (rootView != null) applyLivePalette(palette)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -128,6 +133,7 @@ class AllNotesFragment(
 
         applyTheme(ThemeManager.currentPalette())
         ThemeManager.addListener(themeListener)
+        ThemeManager.addPaletteTickListener(paletteTickListener)
     }
 
     override fun onResume() {
@@ -139,6 +145,7 @@ class AllNotesFragment(
     override fun onDestroyView() {
         super.onDestroyView()
         ThemeManager.removeListener(themeListener)
+        ThemeManager.removePaletteTickListener(paletteTickListener)
         rootView = null
     }
 
@@ -160,6 +167,30 @@ class AllNotesFragment(
         btnExport.setTextColor(palette.buttonFg)
 
         adapter.updatePalette(palette)
+    }
+
+    /**
+     * 主题过渡动画每帧的原地刷新：只改颜色、不重建 item view，避免列表闪烁。
+     * 注意：RV 子 item 的气泡由 AllNotesAdapter.applyLivePalette 负责。
+     */
+    private fun applyLivePalette(palette: ThemePalette) {
+        val v = rootView ?: return
+        v.setBackgroundColor(palette.pageBg)
+        rvAllNotes.setBackgroundColor(palette.pageBg)
+        emptyState.setBackgroundColor(palette.pageBg)
+
+        v.findViewById<ImageView>(R.id.iv_empty_notes_icon)?.setColorFilter(palette.textSecondary)
+        v.findViewById<android.widget.TextView>(R.id.tv_empty_notes_text)?.setTextColor(palette.textSecondary)
+
+        v.findViewById<View>(R.id.button_bar_notes)?.setBackgroundColor(palette.surfaceBg)
+
+        val btnBgTint = ColorStateList.valueOf(palette.buttonBg)
+        btnManage.backgroundTintList = btnBgTint
+        btnManage.setTextColor(palette.buttonFg)
+        btnExport.backgroundTintList = btnBgTint
+        btnExport.setTextColor(palette.buttonFg)
+
+        adapter.applyLivePalette(rvAllNotes, palette)
     }
 
     fun loadNotes() {

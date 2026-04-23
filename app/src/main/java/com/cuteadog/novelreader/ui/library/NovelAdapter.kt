@@ -1,6 +1,7 @@
 package com.cuteadog.novelreader.ui.library
 
 import android.content.res.ColorStateList
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,24 @@ class NovelAdapter(
     fun updatePalette(newPalette: ThemePalette) {
         palette = newPalette
         notifyDataSetChanged()
+    }
+
+    /**
+     * 主题过渡动画期间：原地更新可见 item 的气泡底色与文字色，避免 notifyDataSetChanged 的闪烁。
+     * 不可见 item 会在滑入时通过 bind() 取最新 palette。
+     */
+    fun applyLivePalette(rv: RecyclerView, newPalette: ThemePalette) {
+        palette = newPalette
+        for (i in 0 until rv.childCount) {
+            val child = rv.getChildAt(i)
+            val bg = child.background as? GradientDrawable ?: continue
+            bg.setColor(newPalette.titleBarBg)
+            child.findViewById<TextView>(R.id.tv_title)?.setTextColor(newPalette.titleBarFg)
+            child.findViewById<TextView>(R.id.tv_author)?.setTextColor(newPalette.titleBarFgMuted)
+            child.findViewById<TextView>(R.id.tv_last_read)?.setTextColor(newPalette.titleBarFgMuted)
+            child.findViewById<android.widget.CheckBox>(R.id.cb_select)?.buttonTintList =
+                ColorStateList.valueOf(newPalette.titleBarFg)
+        }
     }
 
     inner class NovelViewHolder(private val binding: ItemNovelBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -90,11 +109,16 @@ class NovelAdapter(
             }
 
             palette?.let { p ->
-                binding.root.setBackgroundColor(p.pageBg)
-                binding.tvTitle.setTextColor(p.textPrimary)
-                binding.tvAuthor.setTextColor(p.textSecondary)
-                binding.tvLastRead.setTextColor(p.textSecondary)
-                binding.cbSelect.buttonTintList = ColorStateList.valueOf(p.buttonBg)
+                val density = itemView.resources.displayMetrics.density
+                binding.root.background = GradientDrawable().apply {
+                    shape = GradientDrawable.RECTANGLE
+                    cornerRadius = 16f * density
+                    setColor(p.titleBarBg)
+                }
+                binding.tvTitle.setTextColor(p.titleBarFg)
+                binding.tvAuthor.setTextColor(p.titleBarFgMuted)
+                binding.tvLastRead.setTextColor(p.titleBarFgMuted)
+                binding.cbSelect.buttonTintList = ColorStateList.valueOf(p.titleBarFg)
             }
         }
     }

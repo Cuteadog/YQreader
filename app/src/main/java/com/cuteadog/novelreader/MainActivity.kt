@@ -45,7 +45,13 @@ class MainActivity : AppCompatActivity() {
     // 0 = 书架，1 = 所有笔记（仅 open 有意义）
     private var selectedOpenTab = 0
 
-    private val themeListener: (Int) -> Unit = { applyOpenTheme(ThemeManager.currentPalette(), animate = true) }
+    // 主题最终态：ThemeManager 动画结束后回调，此时 paletteTickListener 已把颜色过渡到终值，这里只做终态校准。
+    private val themeListener: (Int) -> Unit = { applyOpenTheme(ThemeManager.currentPalette(), animate = false) }
+
+    // 主题过渡动画每帧：将插值后的 palette 瞬时应用到顶栏/Tab/图标/容器底色，实现整页同步渐变。
+    private val paletteTickListener: (ThemePalette) -> Unit = { palette ->
+        applyOpenTheme(palette, animate = false)
+    }
 
     private val importReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -106,11 +112,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Edge-to-Edge：标题栏吸收状态栏高度，fragment 容器吸收底部导航栏高度
+        // Edge-to-Edge：标题栏与 fragment 容器现在同为页面背景色
         val initialBarBg = if (BuildConfig.ENABLE_NOTES_HIGHLIGHT) {
-            ThemeManager.currentPalette().titleBarBg
+            ThemeManager.currentPalette().pageBg
         } else {
-            ContextCompat.getColor(this, R.color.primary)
+            ContextCompat.getColor(this, R.color.background)
         }
         SystemUiHelper.applyEdgeToEdge(
             activity = this,
@@ -125,6 +131,20 @@ class MainActivity : AppCompatActivity() {
                 bottomInsetView = container,
                 referenceBgColor = initialBarBg
             )
+        }
+
+        // personal 风味：顶栏改为页面背景色，图标/文字改为深色
+        if (!BuildConfig.ENABLE_NOTES_HIGHLIGHT) {
+            val titleBar = findViewById<View>(R.id.title_bar)
+            val titleId = resources.getIdentifier("tv_app_title", "id", packageName)
+            val tvAppTitle = if (titleId != 0) findViewById<TextView>(titleId) else null
+            val btnSettings = findViewById<ImageButton>(R.id.btn_settings)
+            val bgColor = ContextCompat.getColor(this, R.color.background)
+            val fgColor = ContextCompat.getColor(this, R.color.text_primary)
+            titleBar?.setBackgroundColor(bgColor)
+            tvAppTitle?.setTextColor(fgColor)
+            btnSettings?.setColorFilter(fgColor)
+            SystemUiHelper.updateStatusBarIcons(this, bgColor)
         }
 
         // 初始化小说目录（位置由 StorageLocationManager 决定，预热目录）
@@ -154,6 +174,7 @@ class MainActivity : AppCompatActivity() {
             setupOpenTabs()
             applyOpenTheme(ThemeManager.currentPalette())
             ThemeManager.addListener(themeListener)
+            ThemeManager.addPaletteTickListener(paletteTickListener)
         }
 
         // 注册广播接收器
@@ -249,9 +270,9 @@ class MainActivity : AppCompatActivity() {
 
         if (animate) {
             if (titleBar != null && oldTitleBg != null) {
-                animateBackground(titleBar, oldTitleBg, palette.titleBarBg)
+                animateBackground(titleBar, oldTitleBg, palette.pageBg)
             } else {
-                titleBar?.setBackgroundColor(palette.titleBarBg)
+                titleBar?.setBackgroundColor(palette.pageBg)
             }
             if (fragmentContainer != null && oldFragBg != null) {
                 animateBackground(fragmentContainer, oldFragBg, palette.pageBg)
@@ -264,19 +285,19 @@ class MainActivity : AppCompatActivity() {
                 notesContainer?.setBackgroundColor(palette.pageBg)
             }
         } else {
-            titleBar?.setBackgroundColor(palette.titleBarBg)
+            titleBar?.setBackgroundColor(palette.pageBg)
             fragmentContainer?.setBackgroundColor(palette.pageBg)
             notesContainer?.setBackgroundColor(palette.pageBg)
         }
 
-        // 系统栏透明，仅更新图标深 / 浅色以适配当前标题栏底色
-        SystemUiHelper.updateStatusBarIcons(this, palette.titleBarBg)
+        // 系统栏透明：顶栏现在为 pageBg，据此决定状态栏图标深浅
+        SystemUiHelper.updateStatusBarIcons(this, palette.pageBg)
 
-        // 文字/图标瞬切（不参与动画）
+        // 文字/图标瞬切（不参与动画）。顶栏改为 pageBg 后改用 textPrimary/Secondary 以保证对比度
         val tabBookshelf = findViewById<TextView>(R.id.tab_bookshelf)
         val tabNotes = findViewById<TextView>(R.id.tab_notes)
-        val activeFg = palette.titleBarFg
-        val mutedFg = palette.titleBarFgMuted
+        val activeFg = palette.textPrimary
+        val mutedFg = palette.textSecondary
 
         tabBookshelf?.setTypeface(
             null,
@@ -341,6 +362,7 @@ class MainActivity : AppCompatActivity() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(importReceiver)
         if (BuildConfig.ENABLE_NOTES_HIGHLIGHT) {
             ThemeManager.removeListener(themeListener)
+            ThemeManager.removePaletteTickListener(paletteTickListener)
         }
     }
 

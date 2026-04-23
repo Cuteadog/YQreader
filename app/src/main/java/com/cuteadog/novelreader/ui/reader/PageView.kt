@@ -620,7 +620,7 @@ class PageView @JvmOverloads constructor(
 
     private fun drawMagnifier(canvas: Canvas, content: StaticLayout) {
         val magnifierW = 240f
-        val magnifierH = 70f
+        val magnifierH = 120f
         val cornerR = 8f
         val offsetAbove = 90f
 

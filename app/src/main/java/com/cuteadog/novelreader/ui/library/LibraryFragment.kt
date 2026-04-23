@@ -48,6 +48,11 @@ class LibraryFragment(
         if (_binding != null) applyTheme(ThemeManager.currentPalette())
     }
 
+    /** 主题过渡动画每帧调用：原地刷新可见颜色，避免 notifyDataSetChanged 的闪烁。 */
+    private val paletteTickListener: (ThemePalette) -> Unit = { palette ->
+        if (_binding != null) applyLivePalette(palette)
+    }
+
     // 声明 launcher，稍后在 onViewCreated 中初始化
     private lateinit var openDirectoryLauncher: ActivityResultLauncher<Intent>
 
@@ -87,6 +92,7 @@ class LibraryFragment(
         if (BuildConfig.ENABLE_NOTES_HIGHLIGHT) {
             applyTheme(ThemeManager.currentPalette())
             ThemeManager.addListener(themeListener)
+            ThemeManager.addPaletteTickListener(paletteTickListener)
         }
     }
 
@@ -265,6 +271,7 @@ class LibraryFragment(
         super.onDestroyView()
         if (BuildConfig.ENABLE_NOTES_HIGHLIGHT) {
             ThemeManager.removeListener(themeListener)
+            ThemeManager.removePaletteTickListener(paletteTickListener)
         }
         _binding = null
     }
@@ -287,5 +294,29 @@ class LibraryFragment(
         b.btnImport.setTextColor(palette.buttonFg)
 
         novelAdapter.updatePalette(palette)
+    }
+
+    /**
+     * 主题过渡动画每帧的原地刷新：只改颜色、不重建 item view，避免列表闪烁。
+     * 注意：RV 子 item 的气泡由 NovelAdapter.applyLivePalette 负责。
+     */
+    private fun applyLivePalette(palette: ThemePalette) {
+        val b = _binding ?: return
+        b.root.setBackgroundColor(palette.pageBg)
+        b.rvNovels.setBackgroundColor(palette.pageBg)
+        b.emptyState.setBackgroundColor(palette.pageBg)
+
+        b.root.findViewById<android.widget.ImageView>(R.id.iv_empty_icon)?.setColorFilter(palette.textSecondary)
+        b.root.findViewById<android.widget.TextView>(R.id.tv_empty_text)?.setTextColor(palette.textSecondary)
+
+        b.buttonBar.setBackgroundColor(palette.surfaceBg)
+
+        val buttonBgTint = ColorStateList.valueOf(palette.buttonBg)
+        b.btnManage.backgroundTintList = buttonBgTint
+        b.btnManage.setTextColor(palette.buttonFg)
+        b.btnImport.backgroundTintList = buttonBgTint
+        b.btnImport.setTextColor(palette.buttonFg)
+
+        novelAdapter.applyLivePalette(b.rvNovels, palette)
     }
 }
