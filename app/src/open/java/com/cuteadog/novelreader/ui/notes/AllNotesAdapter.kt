@@ -1,7 +1,10 @@
 package com.cuteadog.novelreader.ui.notes
 
 import android.content.res.ColorStateList
-import android.graphics.drawable.GradientDrawable
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.RectF
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,43 +63,44 @@ class AllNotesAdapter(
     }
 
     /**
-     * 主题过渡动画期间：原地更新可见 item 的气泡底色与文字色，避免 notifyDataSetChanged 的闪烁。
+     * 主题过渡动画期间：原地更新可见 item 的文字色，避免 notifyDataSetChanged 的闪烁。
      * 不可见 item 会在滑入时通过 bind()/applyBookBubble() 取最新 palette。
      */
     fun applyLivePalette(rv: RecyclerView, newPalette: ThemePalette) {
         palette = newPalette
         for (i in 0 until rv.childCount) {
             val child = rv.getChildAt(i)
-            val bg = child.background as? GradientDrawable
-            bg?.setColor(newPalette.titleBarBg)
+
+            // 刷新自定义 Drawable（线框颜色实时从 palette 读取）
+            child.invalidate()
 
             // BookHeader
             child.findViewById<View>(R.id.header_divider)
                 ?.setBackgroundColor(newPalette.dividerColor)
             child.findViewById<TextView>(R.id.tv_book_title)
-                ?.setTextColor(newPalette.titleBarFg)
+                ?.setTextColor(newPalette.textPrimary)
             child.findViewById<TextView>(R.id.tv_note_count)
-                ?.setTextColor(newPalette.titleBarFgMuted)
+                ?.setTextColor(newPalette.textSecondary)
             child.findViewById<ImageView>(R.id.iv_toggle)
-                ?.setColorFilter(newPalette.titleBarFgMuted)
+                ?.setColorFilter(newPalette.textSecondary)
             child.findViewById<ImageView>(R.id.iv_toggle_left)
-                ?.setColorFilter(newPalette.titleBarFgMuted)
+                ?.setColorFilter(newPalette.textSecondary)
 
             // ChapterDivider
             child.findViewById<View>(R.id.chapter_divider_line)
                 ?.setBackgroundColor(newPalette.dividerColor)
             child.findViewById<TextView>(R.id.tv_chapter_title)
-                ?.setTextColor(newPalette.titleBarFgMuted)
+                ?.setTextColor(newPalette.textSecondary)
 
             // NoteEntry
             child.findViewById<TextView>(R.id.tv_selected_text)
-                ?.setTextColor(newPalette.titleBarFg)
+                ?.setTextColor(newPalette.textPrimary)
             child.findViewById<TextView>(R.id.tv_note_content)
-                ?.setTextColor(newPalette.titleBarFgMuted)
+                ?.setTextColor(newPalette.textSecondary)
 
             // CheckBox（三种 VH 共用 id）
             child.findViewById<CheckBox>(R.id.cb_select)?.buttonTintList =
-                ColorStateList.valueOf(newPalette.titleBarFg)
+                ColorStateList.valueOf(newPalette.textSecondary)
         }
     }
 
@@ -221,22 +225,61 @@ class AllNotesAdapter(
     private fun isLastInBookBubble(position: Int): Boolean =
         position == items.size - 1 || items[position + 1] is AllNotesItem.BookHeader
 
-    /** 为列表每条目贴气泡背景（同一本书共享一个圆角矩形气泡，首/末条圆角，中间条为直角） */
+    /** 为每本书的笔记条目绘制一个外部大框（线框效果）。
+     *  首条画左边+右边+上边+上圆角，中间条只画左边+右边，末条画左边+右边+下边+下圆角。
+     *  无填充（透明），边框为 3dp，颜色绑定标题栏三色（titleBarBg）。
+     *  在 draw() 时实时读取 palette，以支持主题过渡动画。 */
     private fun applyBookBubble(itemView: View, position: Int) {
         val density = itemView.resources.displayMetrics.density
         val r = 16f * density
+        val sw = 3f * density
         val first = isFirstInBookBubble(position)
         val last = isLastInBookBubble(position)
-        val corners = when {
-            first && last -> floatArrayOf(r, r, r, r, r, r, r, r)
-            first -> floatArrayOf(r, r, r, r, 0f, 0f, 0f, 0f)
-            last -> floatArrayOf(0f, 0f, 0f, 0f, r, r, r, r)
-            else -> FloatArray(8)
-        }
-        itemView.background = GradientDrawable().apply {
-            shape = GradientDrawable.RECTANGLE
-            setColor(palette.titleBarBg)
-            cornerRadii = corners
+
+        itemView.background = object : Drawable() {
+            private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                style = Paint.Style.STROKE
+                strokeWidth = sw
+                strokeCap = Paint.Cap.BUTT
+            }
+
+            override fun draw(canvas: Canvas) {
+                // 实时读取当前 palette 颜色，支持主题渐变动画
+                paint.color = palette.titleBarBg
+
+                val w = bounds.width().toFloat()
+                val h = bounds.height().toFloat()
+                val hf = sw / 2f  // half stroke width: stroke 中心线距边界的偏移
+
+                // ---- 左、右边线 ----
+                val topClip = if (first) hf + r else 0f
+                val bottomClip = if (last) h - hf - r else h
+                canvas.drawLine(hf, topClip, hf, bottomClip, paint)
+                canvas.drawLine(w - hf, topClip, w - hf, bottomClip, paint)
+
+                // ---- 上边 + 上圆角（仅首条） ----
+                if (first) {
+                    canvas.drawLine(hf + r, hf, w - hf - r, hf, paint)
+                    // 左上圆角
+                    canvas.drawArc(RectF(hf, hf, hf + 2 * r, hf + 2 * r), 180f, 90f, false, paint)
+                    // 右上圆角
+                    canvas.drawArc(RectF(w - hf - 2 * r, hf, w - hf, hf + 2 * r), 270f, 90f, false, paint)
+                }
+
+                // ---- 下边 + 下圆角（仅末条） ----
+                if (last) {
+                    canvas.drawLine(hf + r, h - hf, w - hf - r, h - hf, paint)
+                    // 左下圆角
+                    canvas.drawArc(RectF(hf, h - hf - 2 * r, hf + 2 * r, h - hf), 90f, 90f, false, paint)
+                    // 右下圆角
+                    canvas.drawArc(RectF(w - hf - 2 * r, h - hf - 2 * r, w - hf, h - hf), 0f, 90f, false, paint)
+                }
+            }
+
+            override fun setAlpha(alpha: Int) {}
+            override fun setColorFilter(cf: android.graphics.ColorFilter?) {}
+            @Deprecated("Deprecated in Java")
+            override fun getOpacity(): Int = android.graphics.PixelFormat.TRANSPARENT
         }
         val lp = itemView.layoutParams as? ViewGroup.MarginLayoutParams ?: return
         val side = (12 * density).toInt()
@@ -261,14 +304,13 @@ class AllNotesAdapter(
         fun bind(item: AllNotesItem.BookHeader) {
             tvBookTitle.text = item.novelTitle
 
-            // 内层行底色透明，让外层气泡 (titleBarBg) 透出
             row.setBackgroundColor(android.graphics.Color.TRANSPARENT)
             divider.setBackgroundColor(palette.dividerColor)
-            tvBookTitle.setTextColor(palette.titleBarFg)
-            tvNoteCount.setTextColor(palette.titleBarFgMuted)
-            ivToggle.setColorFilter(palette.titleBarFgMuted)
-            ivToggleLeft.setColorFilter(palette.titleBarFgMuted)
-            cbSelect.buttonTintList = ColorStateList.valueOf(palette.titleBarFg)
+            tvBookTitle.setTextColor(palette.textPrimary)
+            tvNoteCount.setTextColor(palette.textSecondary)
+            ivToggle.setColorFilter(palette.textSecondary)
+            ivToggleLeft.setColorFilter(palette.textSecondary)
+            cbSelect.buttonTintList = ColorStateList.valueOf(palette.textSecondary)
 
             val toggleIcon = if (item.isCollapsed) R.drawable.ic_expand_more else R.drawable.ic_expand_less
 
@@ -313,8 +355,8 @@ class AllNotesAdapter(
             tvChapterTitle.text = item.chapterTitle
 
             line.setBackgroundColor(palette.dividerColor)
-            tvChapterTitle.setTextColor(palette.titleBarFgMuted)
-            cbSelect.buttonTintList = ColorStateList.valueOf(palette.titleBarFg)
+            tvChapterTitle.setTextColor(palette.textSecondary)
+            cbSelect.buttonTintList = ColorStateList.valueOf(palette.textSecondary)
 
             if (isSelectionMode) {
                 cbSelect.visibility = View.VISIBLE
@@ -341,9 +383,9 @@ class AllNotesAdapter(
             colorBar.setBackgroundColor(item.highlight.color)
             tvSelectedText.text = item.highlight.selectedText
 
-            tvSelectedText.setTextColor(palette.titleBarFg)
-            tvNoteContent.setTextColor(palette.titleBarFgMuted)
-            cbSelect.buttonTintList = ColorStateList.valueOf(palette.titleBarFg)
+            tvSelectedText.setTextColor(palette.textPrimary)
+            tvNoteContent.setTextColor(palette.textSecondary)
+            cbSelect.buttonTintList = ColorStateList.valueOf(palette.textSecondary)
 
             if (item.highlight.isNote) {
                 tvNoteContent.visibility = View.VISIBLE

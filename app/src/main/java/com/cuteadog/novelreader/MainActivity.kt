@@ -112,11 +112,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Edge-to-Edge：标题栏与 fragment 容器现在同为页面背景色
+        // Edge-to-Edge：标题栏保持原主题色 (titleBarBg)，fragment 容器使用页面背景色
         val initialBarBg = if (BuildConfig.ENABLE_NOTES_HIGHLIGHT) {
-            ThemeManager.currentPalette().pageBg
+            ThemeManager.currentPalette().titleBarBg
         } else {
-            ContextCompat.getColor(this, R.color.background)
+            ContextCompat.getColor(this, R.color.primary)
         }
         SystemUiHelper.applyEdgeToEdge(
             activity = this,
@@ -133,14 +133,14 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        // personal 风味：顶栏改为页面背景色，图标/文字改为深色
+        // personal 风味：顶栏保留原来的主题色（primary），图标/文字为白色
         if (!BuildConfig.ENABLE_NOTES_HIGHLIGHT) {
             val titleBar = findViewById<View>(R.id.title_bar)
             val titleId = resources.getIdentifier("tv_app_title", "id", packageName)
             val tvAppTitle = if (titleId != 0) findViewById<TextView>(titleId) else null
             val btnSettings = findViewById<ImageButton>(R.id.btn_settings)
-            val bgColor = ContextCompat.getColor(this, R.color.background)
-            val fgColor = ContextCompat.getColor(this, R.color.text_primary)
+            val bgColor = ContextCompat.getColor(this, R.color.primary)
+            val fgColor = android.graphics.Color.WHITE
             titleBar?.setBackgroundColor(bgColor)
             tvAppTitle?.setTextColor(fgColor)
             btnSettings?.setColorFilter(fgColor)
@@ -270,9 +270,9 @@ class MainActivity : AppCompatActivity() {
 
         if (animate) {
             if (titleBar != null && oldTitleBg != null) {
-                animateBackground(titleBar, oldTitleBg, palette.pageBg)
+                animateBackground(titleBar, oldTitleBg, palette.titleBarBg)
             } else {
-                titleBar?.setBackgroundColor(palette.pageBg)
+                titleBar?.setBackgroundColor(palette.titleBarBg)
             }
             if (fragmentContainer != null && oldFragBg != null) {
                 animateBackground(fragmentContainer, oldFragBg, palette.pageBg)
@@ -285,19 +285,19 @@ class MainActivity : AppCompatActivity() {
                 notesContainer?.setBackgroundColor(palette.pageBg)
             }
         } else {
-            titleBar?.setBackgroundColor(palette.pageBg)
+            titleBar?.setBackgroundColor(palette.titleBarBg)
             fragmentContainer?.setBackgroundColor(palette.pageBg)
             notesContainer?.setBackgroundColor(palette.pageBg)
         }
 
-        // 系统栏透明：顶栏现在为 pageBg，据此决定状态栏图标深浅
-        SystemUiHelper.updateStatusBarIcons(this, palette.pageBg)
+        // 系统栏透明：顶栏为 titleBarBg，据此决定状态栏图标深浅
+        SystemUiHelper.updateStatusBarIcons(this, palette.titleBarBg)
 
-        // 文字/图标瞬切（不参与动画）。顶栏改为 pageBg 后改用 textPrimary/Secondary 以保证对比度
+        // 文字/图标瞬切（不参与动画）。顶栏为 titleBarBg，使用 titleBarFg/muted 以保证对比度
         val tabBookshelf = findViewById<TextView>(R.id.tab_bookshelf)
         val tabNotes = findViewById<TextView>(R.id.tab_notes)
-        val activeFg = palette.textPrimary
-        val mutedFg = palette.textSecondary
+        val activeFg = palette.titleBarFg
+        val mutedFg = palette.titleBarFgMuted
 
         tabBookshelf?.setTypeface(
             null,

@@ -12,7 +12,7 @@ The application uses ProductFlavors architecture to provide two different functi
 - **Package Name**: `com.cuteadog.novelreader.private`
 - **Characteristics**: Focus on reading experience, supports theme switching
 - **Core Features**:
-  - ✅ **Theme switching function** - Supports daytime/eye-care/night themes
+  - ✅ Theme switching function
   - ✅ Font adjustment function
   - ✅ Chapter navigation
   - ❌ Note function (disabled)
@@ -23,7 +23,7 @@ The application uses ProductFlavors architecture to provide two different functi
 - **Package Name**: `com.cuteadog.novelreader`
 - **Characteristics**: Full functionality, supports notes and highlights
 - **Core Features**:
-  - ✅ **Theme switching function** - Supports daytime/eye-care/night themes
+  - ✅ Theme switching function
   - ✅ Font adjustment function
   - ✅ Chapter navigation
   - ✅ **Note function** - Supports creating, viewing, and deleting notes
@@ -235,7 +235,7 @@ If you encounter issues or need further assistance, please refer to the project 
 
 ---
 
-**Project Version**: YQreader 1.2.1
+**Project Version**: YQreader 1.2.1  
 **Last Updated**: April 2026  
 **Architecture Status**: ✅ Version separation implementation complete  
 **Build Status**: ✅ Supports dual version independent building
