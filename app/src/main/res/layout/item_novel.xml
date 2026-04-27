@@ -8,6 +8,7 @@
     android:layout_marginEnd="12dp"
     android:layout_marginTop="6dp"
     android:layout_marginBottom="6dp"
+    android:background="@drawable/bg_bubble_item"
     android:padding="8dp">
 
     <ImageView
@@ -37,7 +38,7 @@
             android:ellipsize="end"
             android:fontFamily="sans-serif-medium"
             android:maxLines="1"
-            android:textColor="@color/text_primary"
+            android:textColor="@android:color/white"
             android:textSize="18sp"
             tools:text="小说标题" />
 
@@ -48,7 +49,7 @@
             android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/text_secondary"
+            android:textColor="#CCFFFFFF"
             android:textSize="14sp"
             tools:text="作者" />
 
@@ -59,7 +60,7 @@
             android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/text_secondary"
+            android:textColor="#CCFFFFFF"
             android:textSize="12sp"
             tools:text="2023-01-01 12:00" />
     </LinearLayout>
@@ -72,7 +73,7 @@
         android:minWidth="0dp"
         android:minHeight="0dp"
         android:padding="4dp"
-        android:buttonTint="@color/text_secondary"
+        android:buttonTint="@android:color/white"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -35,7 +35,7 @@ class NovelAdapter(
     }
 
     /**
-     * 主题过渡动画期间：原地更新可见 item 的气泡边框与文字色，避免 notifyDataSetChanged 的闪烁。
+     * 主题过渡动画期间：原地更新可见 item 的气泡底色与文字色，避免 notifyDataSetChanged 的闪烁。
      * 不可见 item 会在滑入时通过 bind() 取最新 palette。
      */
     fun applyLivePalette(rv: RecyclerView, newPalette: ThemePalette) {
@@ -43,13 +43,12 @@ class NovelAdapter(
         for (i in 0 until rv.childCount) {
             val child = rv.getChildAt(i)
             val bg = child.background as? GradientDrawable ?: continue
-            bg.setColor(android.graphics.Color.TRANSPARENT)
-            bg.setStroke((3 * child.resources.displayMetrics.density).toInt(), newPalette.titleBarBg)
-            child.findViewById<TextView>(R.id.tv_title)?.setTextColor(newPalette.textPrimary)
-            child.findViewById<TextView>(R.id.tv_author)?.setTextColor(newPalette.textSecondary)
-            child.findViewById<TextView>(R.id.tv_last_read)?.setTextColor(newPalette.textSecondary)
+            bg.setColor(newPalette.titleBarBg)
+            child.findViewById<TextView>(R.id.tv_title)?.setTextColor(newPalette.titleBarFg)
+            child.findViewById<TextView>(R.id.tv_author)?.setTextColor(newPalette.titleBarFgMuted)
+            child.findViewById<TextView>(R.id.tv_last_read)?.setTextColor(newPalette.titleBarFgMuted)
             child.findViewById<android.widget.CheckBox>(R.id.cb_select)?.buttonTintList =
-                ColorStateList.valueOf(newPalette.textSecondary)
+                ColorStateList.valueOf(newPalette.titleBarFg)
         }
     }
 
@@ -109,20 +108,17 @@ class NovelAdapter(
                 true
             }
 
-            // 书架气泡框：无填充（透明）+ 3dp 边框，边框颜色绑定标题栏三色（titleBarBg）
-            val density = itemView.resources.displayMetrics.density
-            val borderColor = palette?.titleBarBg ?: android.graphics.Color.parseColor("#757575")
-            binding.root.background = GradientDrawable().apply {
-                shape = GradientDrawable.RECTANGLE
-                cornerRadius = 16f * density
-                setColor(android.graphics.Color.TRANSPARENT)
-                setStroke((3 * density).toInt(), borderColor)
-            }
             palette?.let { p ->
-                binding.tvTitle.setTextColor(p.textPrimary)
-                binding.tvAuthor.setTextColor(p.textSecondary)
-                binding.tvLastRead.setTextColor(p.textSecondary)
-                binding.cbSelect.buttonTintList = ColorStateList.valueOf(p.textSecondary)
+                val density = itemView.resources.displayMetrics.density
+                binding.root.background = GradientDrawable().apply {
+                    shape = GradientDrawable.RECTANGLE
+                    cornerRadius = 16f * density
+                    setColor(p.titleBarBg)
+                }
+                binding.tvTitle.setTextColor(p.titleBarFg)
+                binding.tvAuthor.setTextColor(p.titleBarFgMuted)
+                binding.tvLastRead.setTextColor(p.titleBarFgMuted)
+                binding.cbSelect.buttonTintList = ColorStateList.valueOf(p.titleBarFg)
             }
         }
     }

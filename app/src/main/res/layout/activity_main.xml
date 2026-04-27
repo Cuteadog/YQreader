@@ -6,14 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!-- 共享标题栏：顶栏背景为原主题色（primary）。高度 wrap_content 以承接状态栏 padding -->
+    <!-- 共享标题栏：顶栏背景改用页面背景色；内容为深色字 / 图标。高度 wrap_content 以承接状态栏 padding -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
-        android:background="@color/primary"
-        android:elevation="4dp"
+        android:background="@color/background"
         android:paddingStart="16dp"
         android:paddingEnd="4dp"
         app:layout_constraintTop_toTopOf="parent">
@@ -23,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textColor="@android:color/white"
+            android:textColor="@color/text_primary"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -43,7 +42,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@android:color/white" />
+            app:tint="@color/text_primary" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
