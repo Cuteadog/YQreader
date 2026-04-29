@@ -1,5 +1,6 @@
 <resources>
-    <declare-styleable name="你的自定义View类名">
+    <declare-styleable name="自定义View类名">
         <attr name="tabTextSize" format="dimension" />
+        <attr name="colorDivider" format="dimension"/>
     </declare-styleable>
 </resources>

@@ -30,12 +30,16 @@ android {
         }
     }
 
+    adbOptions {
+        installOptions = ['--user', '0']
+    }
+
     defaultConfig {
         applicationId "com.cuteadog.novelreader"
         minSdk 26
         targetSdk 33
         versionCode 2
-        versionName "1.2.1"
+        versionName "1.2.3"
         flavorDimensions "version"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

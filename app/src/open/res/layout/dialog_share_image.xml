@@ -4,7 +4,7 @@
     android:id="@+id/share_image_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
+    android:background="@color/background"
     android:orientation="vertical">
 
     <!-- 预览滚动区域 -->
@@ -47,7 +47,7 @@
                         android:id="@+id/tv_card_datetime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#666666"
+                        android:textColor="@color/text_secondary"
                         android:textSize="12sp" />
 
                     <TextView
@@ -56,7 +56,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14dp"
                         android:lineSpacingExtra="3dp"
-                        android:textColor="#333333"
+                        android:textColor="@color/text_primary"
                         android:textSize="14sp"
                         android:visibility="gone" />
 
@@ -67,7 +67,7 @@
                         android:layout_marginTop="10dp"
                         android:includeFontPadding="false"
                         android:text="“"
-                        android:textColor="#222222"
+                        android:textColor="@color/text_primary"
                         android:textSize="48sp"
                         android:textStyle="bold" />
 
@@ -77,7 +77,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="-4dp"
                         android:lineSpacingExtra="4dp"
-                        android:textColor="#222222"
+                        android:textColor="@color/text_primary"
                         android:textSize="15sp" />
 
                     <TextView
@@ -86,7 +86,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_marginTop="14dp"
-                        android:textColor="#444444"
+                        android:textColor="@color/text_primary"
                         android:textSize="13sp" />
 
                     <View
@@ -94,7 +94,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:layout_marginTop="18dp"
-                        android:background="#55000000" />
+                        android:background="@color/text_secondary"
+                        android:alpha="0.8" />
 
                     <TextView
                         android:id="@+id/tv_card_footer"
@@ -103,7 +104,7 @@
                         android:layout_gravity="end"
                         android:layout_marginTop="8dp"
                         android:text="@string/share_from_yqreader"
-                        android:textColor="#888888"
+                        android:textColor="@color/text_secondary"
                         android:textSize="11sp" />
                 </LinearLayout>
             </FrameLayout>
@@ -115,7 +116,7 @@
         android:id="@+id/share_template_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F5F5F5"
+        android:background="@color/surface"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -123,7 +124,7 @@
             android:id="@+id/share_template_divider_top"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="#E0E0E0" />
+            android:background="@color/divider" />
 
         <!-- 第一行：多种风格背景横向滚动 -->
         <HorizontalScrollView
@@ -159,7 +160,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/share_hide_thoughts"
-                android:textColor="#333333"
+                android:textColor="@color/text_primary"
                 android:textSize="14sp" />
 
             <androidx.appcompat.widget.SwitchCompat
@@ -173,14 +174,14 @@
         android:id="@+id/share_action_divider"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="#E0E0E0" />
+        android:background="@color/divider" />
 
     <!-- 操作栏：模板 / 保存 / 分享 / 取消 -->
     <LinearLayout
         android:id="@+id/share_action_bar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="#FFFFFF"
+        android:background="@color/surface"
         android:orientation="horizontal">
 
         <TextView
@@ -191,7 +192,7 @@
             android:background="?attr/selectableItemBackground"
             android:gravity="center"
             android:text="@string/share_template"
-            android:textColor="#333333"
+            android:textColor="@color/text_primary"
             android:textSize="15sp" />
 
         <TextView
@@ -202,7 +203,7 @@
             android:background="?attr/selectableItemBackground"
             android:gravity="center"
             android:text="@string/share_save"
-            android:textColor="#333333"
+            android:textColor="@color/text_primary"
             android:textSize="15sp" />
 
         <TextView
@@ -213,7 +214,7 @@
             android:background="?attr/selectableItemBackground"
             android:gravity="center"
             android:text="@string/share"
-            android:textColor="#333333"
+            android:textColor="@color/text_primary"
             android:textSize="15sp" />
 
         <TextView
@@ -224,7 +225,7 @@
             android:background="?attr/selectableItemBackground"
             android:gravity="center"
             android:text="@string/cancel"
-            android:textColor="#757575"
+            android:textColor="@color/text_secondary"
             android:textSize="15sp" />
     </LinearLayout>
 

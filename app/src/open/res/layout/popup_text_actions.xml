@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="高亮"
-            android:textColor="#FFFFFF"
+            android:textColor="@android:color/white"
             android:textSize="11sp"
             android:layout_marginTop="2dp" />
     </LinearLayout>
@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="笔记"
-            android:textColor="#FFFFFF"
+            android:textColor="@android:color/white"
             android:textSize="11sp"
             android:layout_marginTop="2dp" />
     </LinearLayout>
@@ -94,7 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="复制"
-            android:textColor="#FFFFFF"
+            android:textColor="@android:color/white"
             android:textSize="11sp"
             android:layout_marginTop="2dp" />
     </LinearLayout>
@@ -116,7 +116,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="取消"
-            android:textColor="#FFFFFF"
+            android:textColor="@android:color/white"
             android:textSize="11sp"
             android:layout_marginTop="2dp" />
     </LinearLayout>

@@ -74,29 +74,29 @@ class AllNotesAdapter(
             child.findViewById<View>(R.id.header_divider)
                 ?.setBackgroundColor(newPalette.dividerColor)
             child.findViewById<TextView>(R.id.tv_book_title)
-                ?.setTextColor(newPalette.titleBarFg)
+                ?.setTextColor(newPalette.textPrimary)
             child.findViewById<TextView>(R.id.tv_note_count)
-                ?.setTextColor(newPalette.titleBarFgMuted)
+                ?.setTextColor(newPalette.textSecondary)
             child.findViewById<ImageView>(R.id.iv_toggle)
-                ?.setColorFilter(newPalette.titleBarFgMuted)
+                ?.setColorFilter(newPalette.textSecondary)
             child.findViewById<ImageView>(R.id.iv_toggle_left)
-                ?.setColorFilter(newPalette.titleBarFgMuted)
+                ?.setColorFilter(newPalette.textSecondary)
 
             // ChapterDivider
             child.findViewById<View>(R.id.chapter_divider_line)
                 ?.setBackgroundColor(newPalette.dividerColor)
             child.findViewById<TextView>(R.id.tv_chapter_title)
-                ?.setTextColor(newPalette.titleBarFgMuted)
+                ?.setTextColor(newPalette.textSecondary)
 
             // NoteEntry
             child.findViewById<TextView>(R.id.tv_selected_text)
-                ?.setTextColor(newPalette.titleBarFg)
+                ?.setTextColor(newPalette.textPrimary)
             child.findViewById<TextView>(R.id.tv_note_content)
-                ?.setTextColor(newPalette.titleBarFgMuted)
+                ?.setTextColor(newPalette.textSecondary)
 
             // CheckBox（三种 VH 共用 id）
             child.findViewById<CheckBox>(R.id.cb_select)?.buttonTintList =
-                ColorStateList.valueOf(newPalette.titleBarFg)
+                ColorStateList.valueOf(newPalette.textSecondary)
         }
     }
 
@@ -264,11 +264,11 @@ class AllNotesAdapter(
             // 内层行底色透明，让外层气泡 (titleBarBg) 透出
             row.setBackgroundColor(android.graphics.Color.TRANSPARENT)
             divider.setBackgroundColor(palette.dividerColor)
-            tvBookTitle.setTextColor(palette.titleBarFg)
-            tvNoteCount.setTextColor(palette.titleBarFgMuted)
-            ivToggle.setColorFilter(palette.titleBarFgMuted)
-            ivToggleLeft.setColorFilter(palette.titleBarFgMuted)
-            cbSelect.buttonTintList = ColorStateList.valueOf(palette.titleBarFg)
+            tvBookTitle.setTextColor(palette.textPrimary)
+            tvNoteCount.setTextColor(palette.textSecondary)
+            ivToggle.setColorFilter(palette.textSecondary)
+            ivToggleLeft.setColorFilter(palette.textSecondary)
+            cbSelect.buttonTintList = ColorStateList.valueOf(palette.textSecondary)
 
             val toggleIcon = if (item.isCollapsed) R.drawable.ic_expand_more else R.drawable.ic_expand_less
 
@@ -313,8 +313,8 @@ class AllNotesAdapter(
             tvChapterTitle.text = item.chapterTitle
 
             line.setBackgroundColor(palette.dividerColor)
-            tvChapterTitle.setTextColor(palette.titleBarFgMuted)
-            cbSelect.buttonTintList = ColorStateList.valueOf(palette.titleBarFg)
+            tvChapterTitle.setTextColor(palette.textSecondary)
+            cbSelect.buttonTintList = ColorStateList.valueOf(palette.textSecondary)
 
             if (isSelectionMode) {
                 cbSelect.visibility = View.VISIBLE
@@ -341,9 +341,9 @@ class AllNotesAdapter(
             colorBar.setBackgroundColor(item.highlight.color)
             tvSelectedText.text = item.highlight.selectedText
 
-            tvSelectedText.setTextColor(palette.titleBarFg)
-            tvNoteContent.setTextColor(palette.titleBarFgMuted)
-            cbSelect.buttonTintList = ColorStateList.valueOf(palette.titleBarFg)
+            tvSelectedText.setTextColor(palette.textPrimary)
+            tvNoteContent.setTextColor(palette.textSecondary)
+            cbSelect.buttonTintList = ColorStateList.valueOf(palette.textSecondary)
 
             if (item.highlight.isNote) {
                 tvNoteContent.visibility = View.VISIBLE

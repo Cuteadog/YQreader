@@ -4,7 +4,7 @@
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
+    android:background="@color/primary"
     android:orientation="vertical">
 
     <!-- 顶部标题栏：高度 wrap_content，由 SystemUiHelper 追加状态栏 padding 时不挤压内容 -->
@@ -16,7 +16,8 @@
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:paddingStart="4dp"
-        android:paddingEnd="4dp">
+        android:paddingEnd="4dp"
+        android:paddingBottom="8dp">
 
         <ImageButton
             android:id="@+id/btn_back"
@@ -29,7 +30,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@android:color/white" />
+            app:tint="@color/text_primary" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -40,7 +41,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/settings"
-            android:textColor="@android:color/white"
+            android:textColor="@color/text_primary"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -127,7 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:layout_marginStart="16dp"
-                    android:background="#E0E0E0" />
+                    android:background="@color/divider" />
 
                 <!-- 导入模式 -->
                 <LinearLayout
@@ -224,7 +225,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:layout_marginStart="16dp"
-                    android:background="#E0E0E0" />
+                    android:background="@color/divider" />
 
                 <!-- 关于我们 -->
                 <LinearLayout

@@ -148,7 +148,10 @@ class ReaderActivityOpen : ReaderActivity() {
                 else -> all.sortedByDescending { it.timestamp }
             }
             adapter.updateEntries(entries)
-            tvEmpty.visibility = if (entries.isEmpty()) android.view.View.VISIBLE else android.view.View.GONE
+            val isEmpty = entries.isEmpty()
+            val rvNotes = (tvEmpty.parent as? android.view.ViewGroup)?.findViewById<RecyclerView>(R.id.rv_notes)
+            rvNotes?.visibility = if (isEmpty) android.view.View.GONE else android.view.View.VISIBLE
+            tvEmpty.visibility = if (isEmpty) android.view.View.VISIBLE else android.view.View.GONE
         }
     }
 

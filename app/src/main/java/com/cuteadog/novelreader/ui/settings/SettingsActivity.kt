@@ -226,7 +226,7 @@ class SettingsActivity : AppCompatActivity() {
                 background = GradientDrawable().apply {
                     shape = GradientDrawable.OVAL
                     setStroke((2 * density).toInt(), palette.textSecondary)
-                    setColor(if (i == currentIndex) palette.buttonBg else 0x00000000)
+                    setColor(if (i == currentIndex) palette.textSecondary else 0x00000000)
                 }
             }
             val label = TextView(this).apply {

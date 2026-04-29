@@ -13,8 +13,10 @@
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
         android:background="@color/background"
+        android:elevation="4dp"
         android:paddingStart="16dp"
         android:paddingEnd="4dp"
+        android:paddingBottom="8dp"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView

@@ -9,9 +9,9 @@
         android:id="@+id/tv_selected_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFF9C4"
+        android:background="@color/highlight_default"
         android:padding="10dp"
-        android:textColor="#555555"
+        android:textColor="@color/text_secondary"
         android:textSize="14sp"
         android:maxLines="4"
         android:ellipsize="end"
@@ -20,7 +20,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#E0E0E0"
+        android:background="@color/divider"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="12dp" />
 
@@ -33,6 +33,6 @@
         android:hint="写下你的想法..."
         android:inputType="textMultiLine"
         android:textSize="15sp"
-        android:textColor="#333333" />
+        android:textColor="@color/text_primary" />
 
 </LinearLayout>

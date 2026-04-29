@@ -16,7 +16,8 @@
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:paddingStart="4dp"
-        android:paddingEnd="4dp">
+        android:paddingEnd="4dp"
+        android:paddingBottom="8dp">
 
         <!-- 返回按钮 -->
         <ImageButton
@@ -30,7 +31,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@android:color/white" />
+            app:tint="@color/text_primary" />
 
         <!-- 标题 -->
         <TextView
@@ -42,7 +43,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/note_detail"
-            android:textColor="@android:color/white"
+            android:textColor="@color/text_primary"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -50,7 +51,7 @@
             app:layout_constraintStart_toEndOf="@id/btn_back"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- 分享按钮（暂不实现） -->
+        <!-- 分享按钮 -->
         <ImageButton
             android:id="@+id/btn_share"
             android:layout_width="40dp"
@@ -63,7 +64,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@android:color/white" />
+            app:tint="@color/text_primary" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- 可滚动内容区域 -->
@@ -96,7 +97,7 @@
                 android:layout_height="0.5dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:background="#E0E0E0" />
+                android:background="@color/divider" />
 
             <!-- 原文标签 -->
             <TextView
@@ -119,7 +120,7 @@
                     android:layout_width="3dp"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="10dp"
-                    android:background="#FFD600" />
+                    android:background="@color/highlight_default" />
 
                 <TextView
                     android:id="@+id/tv_original_text"
@@ -165,7 +166,7 @@
                 android:layout_height="0.5dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="12dp"
-                android:background="#E0E0E0" />
+                android:background="@color/divider" />
 
             <!-- 日期和时间 -->
             <TextView
@@ -182,7 +183,7 @@
                 android:layout_height="0.5dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="16dp"
-                android:background="#E0E0E0" />
+                android:background="@color/divider" />
 
             <!-- 跳转到原文位置按钮 -->
             <Button
@@ -191,7 +192,7 @@
                 android:layout_height="48dp"
                 android:backgroundTint="@color/primary"
                 android:text="@string/jump_to_source"
-                android:textColor="@android:color/white"
+                android:textColor="@color/text_primary"
                 android:textSize="15sp" />
 
         </LinearLayout>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@android:color/white">
+    android:background="@color/surface">
 
     <LinearLayout
         android:id="@+id/notes_sheet_header"
@@ -15,7 +15,7 @@
         android:gravity="center_vertical"
         android:paddingStart="16dp"
         android:paddingEnd="8dp"
-        android:background="#F5F5F5">
+        android:background="@color/primary">
         <TextView
             android:id="@+id/tv_notes_sheet_title"
             android:layout_width="0dp"
@@ -24,7 +24,7 @@
             android:text="@string/note_highlight"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#333333" />
+            android:textColor="@color/text_primary" />
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_notes_filter"
             android:layout_width="wrap_content"
@@ -45,10 +45,10 @@
     <TextView
         android:id="@+id/tv_notes_empty"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="400dp"
         android:gravity="center"
         android:text="暂无笔记或高亮"
-        android:textColor="#AAAAAA"
+        android:textColor="@color/text_secondary"
         android:visibility="gone" />
 
 </LinearLayout>

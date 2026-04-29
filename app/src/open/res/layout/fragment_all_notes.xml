@@ -64,7 +64,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/primary"
             android:text="@string/manage"
-            android:textColor="@android:color/white"
+            android:textColor="@color/text_primary"
             android:textSize="16sp" />
 
         <Button
@@ -76,7 +76,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/primary"
             android:text="@string/export_notes"
-            android:textColor="@android:color/white"
+            android:textColor="@color/text_primary"
             android:textSize="16sp" />
     </LinearLayout>
 

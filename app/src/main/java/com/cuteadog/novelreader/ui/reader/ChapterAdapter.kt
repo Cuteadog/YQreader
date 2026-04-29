@@ -40,7 +40,7 @@ class ChapterAdapter(
 
             // 高亮当前章节
             if (position == currentChapterIndex) {
-                tvChapterTitle.setTextColor(itemView.context.getColor(R.color.primary))
+                tvChapterTitle.setTextColor(itemView.context.getColor(R.color.accent_blue))
                 tvChapterTitle.isBold = true
             } else {
                 tvChapterTitle.setTextColor(textColor)

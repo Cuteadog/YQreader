@@ -40,7 +40,7 @@ internal fun AlertDialog.applyDialogChromeTheme(palette: ThemePalette) {
 
     // 标题下方分割线（系统绘制）颜色可通过 alertDialogStyle 控制，这里不处理
 
-    getButton(DialogInterface.BUTTON_POSITIVE)?.setTextColor(palette.buttonBg)
+    getButton(DialogInterface.BUTTON_POSITIVE)?.setTextColor(palette.textSecondary)
     getButton(DialogInterface.BUTTON_NEGATIVE)?.setTextColor(palette.textSecondary)
     getButton(DialogInterface.BUTTON_NEUTRAL)?.setTextColor(palette.textSecondary)
 }

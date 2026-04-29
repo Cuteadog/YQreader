@@ -44,11 +44,11 @@ class NovelAdapter(
             val child = rv.getChildAt(i)
             val bg = child.background as? GradientDrawable ?: continue
             bg.setColor(newPalette.titleBarBg)
-            child.findViewById<TextView>(R.id.tv_title)?.setTextColor(newPalette.titleBarFg)
-            child.findViewById<TextView>(R.id.tv_author)?.setTextColor(newPalette.titleBarFgMuted)
-            child.findViewById<TextView>(R.id.tv_last_read)?.setTextColor(newPalette.titleBarFgMuted)
+            child.findViewById<TextView>(R.id.tv_title)?.setTextColor(newPalette.textPrimary)
+            child.findViewById<TextView>(R.id.tv_author)?.setTextColor(newPalette.textSecondary)
+            child.findViewById<TextView>(R.id.tv_last_read)?.setTextColor(newPalette.textSecondary)
             child.findViewById<android.widget.CheckBox>(R.id.cb_select)?.buttonTintList =
-                ColorStateList.valueOf(newPalette.titleBarFg)
+                ColorStateList.valueOf(newPalette.textSecondary)
         }
     }
 
@@ -115,10 +115,10 @@ class NovelAdapter(
                     cornerRadius = 16f * density
                     setColor(p.titleBarBg)
                 }
-                binding.tvTitle.setTextColor(p.titleBarFg)
-                binding.tvAuthor.setTextColor(p.titleBarFgMuted)
-                binding.tvLastRead.setTextColor(p.titleBarFgMuted)
-                binding.cbSelect.buttonTintList = ColorStateList.valueOf(p.titleBarFg)
+                binding.tvTitle.setTextColor(p.textPrimary)
+                binding.tvAuthor.setTextColor(p.textSecondary)
+                binding.tvLastRead.setTextColor(p.textSecondary)
+                binding.cbSelect.buttonTintList = ColorStateList.valueOf(p.textSecondary)
             }
         }
     }

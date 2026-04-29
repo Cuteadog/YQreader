@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#2196F3</color>
-    <color name="primary_dark">#1976D2</color>
-    <color name="primary_light">#BBDEFB</color>
-    <color name="accent">#FF4081</color>
+    <color name="primary">#F3F3F3</color>
     <color name="text_primary">#212121</color>
     <color name="text_secondary">#757575</color>
     <color name="background">#FFFFFF</color>
     <color name="surface">#FFFFFF</color>
+    <color name="divider">#E0E0E0</color>
+    <color name="highlight_default">#F4F0BA</color>
+    <color name="accent_blue">#2196F3</color>
+    <color name="icon_background_blue">#2196F3</color>
+    <!-- not used -->
+    <color name="primary_dark">#1976D2</color>
+    <color name="primary_light">#BBDEFB</color>
+    <color name="highlight_green">#B8D9B8</color>
+    <color name="highlight_pink">#E8BAC8</color>
+    <color name="highlight_blue">#B8D4E8</color>
     <color name="error">#FF5252</color>
-    <color name="divider">#BDBDBD</color>
-    <color name="icon_background_blue">#FF2196F3</color>
-    <color name="highlight_yellow">#FFFFD600</color>
-    <color name="highlight_green">#FFA5D6A7</color>
-    <color name="highlight_pink">#FFF48FB1</color>
-    <color name="highlight_blue">#FF81D4FA</color>
 </resources>

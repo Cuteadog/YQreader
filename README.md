@@ -104,9 +104,10 @@ src/main/java/com/cuteadog/novelreader/
 ├── ui/
 │   ├── library/       # 书架界面
 │   ├── reader/        # 阅读界面
-│   ├── notes/         # 笔记界面 (Open版本特有)
 │   └── settings/      # 设置界面
-├── theme/             # 主题管理
+│   ├── system/        # 系统UI辅助
+│   └── theme/         # 主题管理
+├── service/           # 后台服务：导入任务(ImportWorker)
 ├── storage/           # 存储位置管理
 └── util/              # 工具类
 ```
@@ -178,14 +179,6 @@ src/main/java/com/cuteadog/novelreader/
 └── shareBackgrounds/ # 分享背景图片
 ```
 
-## 📊 更新记录
-
-应用包含完整的更新日志页面，记录所有版本变更：
-
-### v1.1 主要更新
-- **新增**: 主题切换按钮与过渡动画、主页两个Tab、所有笔记页+管理/导出、笔记详情页、设置页扩充、局部放大镜等
-- **修复**: 打开小说的闪烁问题、弹窗主题同步、阅读界面操作按钮阴影、长按不整页放大等
-
 ## ⚠️ 注意事项
 
 1. **文件格式**: 请确保导入的文件夹中包含.txt格式的小说文件
@@ -195,6 +188,10 @@ src/main/java/com/cuteadog/novelreader/
 5. **数据兼容**: 两个版本的数据存储独立，不会相互影响
 
 ## 🛠️ 开发说明
+
+### 环境配置
+1. **Gradle版本**: gradle-7.5-bin
+2. **JDK版本**: jdk-17.0.18.8-hotspot
 
 ### BuildConfig字段
 ```kotlin
@@ -232,10 +229,3 @@ if (BuildConfig.ENABLE_NOTES_HIGHLIGHT) {
 2. Gradle构建配置是否完整
 3. Java版本是否兼容
 4. 存储权限是否已授予
-
----
-
-**项目版本**: YQreader 1.2.1  
-**最后更新**: 2026年4月  
-**架构状态**: ✅ 版本分离实现完成  
-**构建状态**: ✅ 支持双版本独立构建

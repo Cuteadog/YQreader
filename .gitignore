@@ -41,7 +41,7 @@ Thumbs.db
 app/build/
 .claude/
 .vscode/
-examples/
+samples/
 updates/
 dialog.txt
 log.txt

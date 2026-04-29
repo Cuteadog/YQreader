@@ -16,7 +16,8 @@
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:paddingStart="4dp"
-        android:paddingEnd="4dp">
+        android:paddingEnd="4dp"
+        android:paddingBottom="8dp">
 
         <ImageButton
             android:id="@+id/btn_back"
@@ -29,7 +30,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@android:color/white" />
+            app:tint="@color/text_primary" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -39,7 +40,7 @@
             android:layout_marginEnd="8dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@android:color/white"
+            android:textColor="@color/text_primary"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

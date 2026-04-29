@@ -93,20 +93,21 @@ The application uses ProductFlavors architecture to provide two different functi
 ```
 app/
 ├── src/main/          # Shared code and resources
-├── src/personal/      # Personal version specific implementation
-└── src/open/          # Open version specific implementation
+├── src/personal/      # Personal version specific implementations
+└── src/open/          # Open version specific implementations
 
 src/main/java/com/cuteadog/novelreader/
 ├── data/
 │   ├── model/         # Data models (Novel, Chapter, Highlight)
 │   ├── dao/           # Data access objects
-│   └── repository/    # Data repositories
+│   └── repository/    # Repositories
 ├── ui/
-│   ├── library/       # Bookshelf interface
+│   ├── library/       # Library interface
 │   ├── reader/        # Reading interface
-│   ├── notes/         # Notes interface (Open version specific)
-│   └── settings/      # Settings interface
-├── theme/             # Theme management
+│   ├── settings/      # Settings interface
+│   ├── system/        # System UI helpers
+│   └── theme/         # Theme management
+├── service/           # Background services: import task (ImportWorker)
 ├── storage/           # Storage location management
 └── util/              # Utility classes
 ```
@@ -178,14 +179,6 @@ The application uses a unified theme management system, supporting:
 └── shareBackgrounds/ # Sharing background images
 ```
 
-## 📊 Update Record
-
-The application includes a complete update log page, recording all version changes:
-
-### v1.1 Major Updates
-- **Added**: Theme switch button with transition animation, two tabs on home page, all notes page + management/export, note detail page, settings page expansion, local magnifier, etc.
-- **Fixed**: Novel opening flash issue, popup theme synchronization, reading interface operation button shadows, long press not full page zoom, etc.
-
 ## ⚠️ Notes and Precautions
 
 1. **File Format**: Ensure imported folders contain .txt format novel files
@@ -195,6 +188,10 @@ The application includes a complete update log page, recording all version chang
 5. **Data Compatibility**: Two versions have independent data storage and do not affect each other
 
 ## 🛠️ Development Notes
+
+### Environment Configuration
+1. **Gradle version**: gradle-7.5-bin
+2. **JDK version**: jdk-17.0.18.8-hotspot
 
 ### BuildConfig Fields
 ```kotlin
@@ -232,10 +229,3 @@ If you encounter issues or need further assistance, please refer to the project 
 2. Whether Gradle build configuration is complete
 3. Whether Java version is compatible
 4. Whether storage permissions have been granted
-
----
-
-**Project Version**: YQreader 1.2.1  
-**Last Updated**: April 2026  
-**Architecture Status**: ✅ Version separation implementation complete  
-**Build Status**: ✅ Supports dual version independent building

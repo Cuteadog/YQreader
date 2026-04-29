@@ -281,10 +281,10 @@ open class ReaderActivity : AppCompatActivity() {
 
         when (currentTheme) {
             THEME_DAY -> {
-                topMenu.setBackgroundColor("#CC2196F3".toColorInt())
-                findViewById<TextView>(R.id.tv_menu_title).setTextColor(Color.WHITE)
-                bottomMenu.setBackgroundColor("#CC2196F3".toColorInt())
-                setMenuIconsTint(Color.WHITE)
+                topMenu.setBackgroundColor("#CCF3F3F3".toColorInt())
+                findViewById<TextView>(R.id.tv_menu_title).setTextColor(Color.BLACK)
+                bottomMenu.setBackgroundColor("#CCF3F3F3".toColorInt())
+                setMenuIconsTint(Color.BLACK)
                 binding.rvChapters.setBackgroundColor("#FFFFFF".toColorInt())
                 if (::chapterAdapter.isInitialized) chapterAdapter.notifyDataSetChanged()
             }
@@ -298,9 +298,9 @@ open class ReaderActivity : AppCompatActivity() {
             }
             THEME_NIGHT -> {
                 topMenu.setBackgroundColor("#CC445566".toColorInt())
-                findViewById<TextView>(R.id.tv_menu_title).setTextColor("#2196F3".toColorInt())
+                findViewById<TextView>(R.id.tv_menu_title).setTextColor("#80808D".toColorInt())
                 bottomMenu.setBackgroundColor("#CC445566".toColorInt())
-                setMenuIconsTint("#2196F3".toColorInt())
+                setMenuIconsTint("#80808D".toColorInt())
                 binding.rvChapters.setBackgroundColor("#445566".toColorInt())
                 if (::chapterAdapter.isInitialized) chapterAdapter.notifyDataSetChanged()
             }

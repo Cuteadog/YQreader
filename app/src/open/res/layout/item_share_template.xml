@@ -32,7 +32,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="+"
-            android:textColor="#888888"
+            android:textColor="@color/text_secondary"
             android:textSize="28sp"
             android:visibility="gone" />
 
@@ -51,7 +51,7 @@
             android:gravity="center"
             android:includeFontPadding="false"
             android:text="×"
-            android:textColor="#FFFFFF"
+            android:textColor="@android:color/white"
             android:textSize="13sp"
             android:textStyle="bold"
             android:visibility="gone"
@@ -63,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:textColor="#555555"
+        android:textColor="@color/text_secondary"
         android:textSize="11sp"
         tools:text="本地1" />
 </LinearLayout>

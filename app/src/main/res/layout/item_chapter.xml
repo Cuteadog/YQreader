@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textColor="@color/text_primary"
+        android:textColor="@color/text_secondary"
         android:textSize="16sp"
         tools:text="第一章 开始" />
 
