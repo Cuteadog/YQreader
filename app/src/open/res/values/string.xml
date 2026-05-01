@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">YQreader(open)</string>
+    <string name="app_name">YQreader</string>
     <string name="tab_bookshelf">我的书架</string>
     <string name="tab_all_notes">所有笔记</string>
     <string name="notes_coming_soon">笔记功能即将推出</string>

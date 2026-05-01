@@ -13,7 +13,6 @@ import com.cuteadog.novelreader.MyApplication
 import com.cuteadog.novelreader.R
 import com.cuteadog.novelreader.data.dao.NovelDao
 import com.cuteadog.novelreader.data.model.Highlight
-import com.cuteadog.novelreader.data.model.Novel
 import com.cuteadog.novelreader.data.repository.NovelRepository
 import com.cuteadog.novelreader.ui.reader.ReaderActivity
 import com.cuteadog.novelreader.ui.system.SystemUiHelper

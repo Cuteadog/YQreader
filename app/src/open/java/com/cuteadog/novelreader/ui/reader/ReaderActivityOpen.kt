@@ -5,7 +5,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
@@ -88,7 +87,7 @@ class ReaderActivityOpen : ReaderActivity() {
         // 把每个 TabView 的真实背景替换成半径受限的 ripple。
         // TabLayout 的 app:tabBackground 只会作为静态 drawable 绘制，
         // 真正响应触摸的 ripple 来自 tabRippleColor 所构造的 RippleDrawable。
-        // 这里把 tabRippleColor 设为 null（XML 中声明），并手动挂一个 18dp 半径的 ripple 作为 TabView 背景。
+        // 这里把 tabRippleColor 设为 null（XML 中声明），并手动挂一个 24dp 半径的 ripple 作为 TabView 背景。
         (tabLayout.getChildAt(0) as? android.view.ViewGroup)?.let { strip ->
             for (i in 0 until strip.childCount) {
                 strip.getChildAt(i).background = androidx.core.content.ContextCompat.getDrawable(

@@ -48,8 +48,9 @@ class NovelParser(private val context: Context) {
             text, 0, textLength, textPaint, availableWidth
         )
             .setAlignment(Layout.Alignment.ALIGN_NORMAL)
-            .setLineSpacing(0f, 1.5f)
+            .setLineSpacing(0f, 1.2f)
             .setIncludePad(false)
+            .setEllipsize(null)
             .build()
 
         val totalLines = fullLayout.lineCount
@@ -90,9 +91,9 @@ class NovelParser(private val context: Context) {
                 pageText, 0, pageText.length, textPaint, availableWidth
             )
                 .setAlignment(Layout.Alignment.ALIGN_NORMAL)
-                .setLineSpacing(0f, 1.5f)
+                .setLineSpacing(0f, 1.2f)   // 设置行间距
                 .setIncludePad(false)
-                .setEllipsize(null)              // 不添加省略号
+                .setEllipsize(null)         // 不添加省略号
                 .build()
 
             pages.add(pageLayout)

@@ -32,7 +32,7 @@ class PageView @JvmOverloads constructor(
     private var nextPageContent: StaticLayout? = null
     private var prevPageContent: StaticLayout? = null
 
-    private var textSize: Float = 32f
+    private var textSize: Float = 42f
     private var textColor: Int = Color.BLACK
     private var backgroundColor: Int = Color.WHITE
 
@@ -669,6 +669,6 @@ class PageView @JvmOverloads constructor(
         const val PAGE_PREVIOUS = -1
         const val PAGE_NEXT = 1
         const val PADDING_LEFT = 40f
-        const val PADDING_TOP = 30f
+        const val PADDING_TOP = 24f
     }
 }

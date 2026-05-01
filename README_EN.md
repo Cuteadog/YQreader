@@ -1,3 +1,5 @@
+#### [切换至中文](README.md)
+
 # YQreader Novel Reading Application
 
 A local reader app used simply for reading .txt files and taking notes.

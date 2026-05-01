@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -18,6 +20,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -79,7 +84,7 @@ open class ReaderActivity : AppCompatActivity() {
     protected lateinit var novelParser: NovelParser
     protected lateinit var chapterAdapter: ChapterAdapter
 
-    protected var textSize: Float = 32f
+    protected var textSize: Float = 42f
     protected var textSizeToastView: TextView? = null
 
     // Current selection state (chapter-absolute offsets)
@@ -176,7 +181,7 @@ open class ReaderActivity : AppCompatActivity() {
 
     private fun adjustFontSize(delta: Float) {
         val newSize = textSize + delta
-        if (newSize in 16f..48f) {
+        if (newSize in 24f..60f) {
             textSize = newSize
             binding.pageView.setTextSize(textSize)
             currentChapterPages = emptyList()
@@ -270,7 +275,7 @@ open class ReaderActivity : AppCompatActivity() {
         val oldBg = binding.pageView.getBackgroundColor()
         val newBg = when (currentTheme) {
             THEME_DAY -> "#FFFFFF".toColorInt()
-            THEME_EYE -> "#FFF5E6".toColorInt()
+            THEME_EYE -> "#F0E0CC".toColorInt()
             else -> "#202020".toColorInt()
         }
         val newText = when (currentTheme) {
@@ -281,27 +286,27 @@ open class ReaderActivity : AppCompatActivity() {
 
         when (currentTheme) {
             THEME_DAY -> {
-                topMenu.setBackgroundColor("#CCF3F3F3".toColorInt())
+                topMenu.setBackgroundColor("#F5F3F3F3".toColorInt())
                 findViewById<TextView>(R.id.tv_menu_title).setTextColor(Color.BLACK)
-                bottomMenu.setBackgroundColor("#CCF3F3F3".toColorInt())
+                bottomMenu.setBackgroundColor("#F5F3F3F3".toColorInt())
                 setMenuIconsTint(Color.BLACK)
                 binding.rvChapters.setBackgroundColor("#FFFFFF".toColorInt())
                 if (::chapterAdapter.isInitialized) chapterAdapter.notifyDataSetChanged()
             }
             THEME_EYE -> {
-                topMenu.setBackgroundColor("#CCFFDEAD".toColorInt())
+                topMenu.setBackgroundColor("#F5FFDEAD".toColorInt())
                 findViewById<TextView>(R.id.tv_menu_title).setTextColor(Color.BLACK)
-                bottomMenu.setBackgroundColor("#CCFFDEAD".toColorInt())
+                bottomMenu.setBackgroundColor("#F5FFDEAD".toColorInt())
                 setMenuIconsTint(Color.BLACK)
-                binding.rvChapters.setBackgroundColor("#FFF5E6".toColorInt())
+                binding.rvChapters.setBackgroundColor("#F0E0CC".toColorInt())
                 if (::chapterAdapter.isInitialized) chapterAdapter.notifyDataSetChanged()
             }
             THEME_NIGHT -> {
-                topMenu.setBackgroundColor("#CC445566".toColorInt())
+                topMenu.setBackgroundColor("#F52C2C2C".toColorInt())
                 findViewById<TextView>(R.id.tv_menu_title).setTextColor("#80808D".toColorInt())
-                bottomMenu.setBackgroundColor("#CC445566".toColorInt())
+                bottomMenu.setBackgroundColor("#F52C2C2C".toColorInt())
                 setMenuIconsTint("#80808D".toColorInt())
-                binding.rvChapters.setBackgroundColor("#445566".toColorInt())
+                binding.rvChapters.setBackgroundColor("#2C2C2C".toColorInt())
                 if (::chapterAdapter.isInitialized) chapterAdapter.notifyDataSetChanged()
             }
         }
@@ -320,6 +325,9 @@ open class ReaderActivity : AppCompatActivity() {
             binding.tvPageIndicator.setBackgroundColor(newBg)
         }
 
+        // 同步更新窗口背景色，使全面屏缺口区域（StatusBar 黑条）颜色与页面底色一致
+        window.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(newBg))
+
         // 系统栏透明，根据页面底色切换图标深 / 浅色
         SystemUiHelper.updateStatusBarIcons(this, newBg)
     }
@@ -328,11 +336,17 @@ open class ReaderActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // 允许内容延伸到屏幕缺口区域（全面屏/刘海屏），避免顶部出现黑条
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            window.attributes.layoutInDisplayCutoutMode =
+                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+        }
+
         // 首次绘制前同步取缓存主题，避免打开阅读器时从白色过渡到目标色的闪烁
         currentTheme = com.cuteadog.novelreader.ui.theme.ThemeManager.current()
         val initialBg = when (currentTheme) {
             THEME_DAY -> "#FFFFFF".toColorInt()
-            THEME_EYE -> "#FFF5E6".toColorInt()
+            THEME_EYE -> "#F0E0CC".toColorInt()
             else -> "#202020".toColorInt()
         }
         window.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(initialBg))
@@ -748,7 +762,28 @@ open class ReaderActivity : AppCompatActivity() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        loadCurrentChapter()
+        // 旋转后系统栏可能重新出现，需要重新进入沉浸模式
+        SystemUiHelper.enterImmersive(this)
+        // 更新状态栏图标颜色（根据当前主题背景）
+        val currentBg = when (currentTheme) {
+            THEME_DAY -> "#FFFFFF".toColorInt()
+            THEME_EYE -> "#F0E0CC".toColorInt()
+            else -> "#202020".toColorInt()
+        }
+        SystemUiHelper.updateStatusBarIcons(this, currentBg)
+
+        // 清空页面布局缓存，等待布局完成后再重新分页
+        currentChapterPages = emptyList()
+        // 使用 OnGlobalLayoutListener 确保 PageView 已完成新尺寸的布局
+        binding.pageView.viewTreeObserver.addOnGlobalLayoutListener(object :
+            android.view.ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                binding.pageView.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                loadCurrentChapter()
+            }
+        })
+        // 触发重新布局
+        binding.pageView.requestLayout()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {

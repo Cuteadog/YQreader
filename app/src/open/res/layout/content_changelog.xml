@@ -58,7 +58,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="•  笔记详情“分享”功能：可选文本或图片两种方式分享；图片支持多种内置背景模板、本地导入背景，可保存到相册或转发到其它应用"
+                android:text="•  笔记详情“分享”功能：可选文本或图片两种方式分享；图片支持多种内置背景模板、本地导入背景"
                 android:textSize="14sp"
                 android:lineSpacingExtra="3dp"
                 android:layout_marginBottom="8dp" />
@@ -74,7 +74,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="•  设置页“储存位置”切换功能：内置（应用私有目录）/ 外部（/Android/data/包名/）；切换时自动迁移已有小说与分享背景"
+                android:text="•  设置页“储存位置”切换功能：内置/外部，切换时自动迁移已有小说与分享背景"
                 android:textSize="14sp"
                 android:lineSpacingExtra="3dp"
                 android:layout_marginBottom="8dp" />
@@ -82,7 +82,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="•  系统栏全透明：非阅读页采用 Edge-to-Edge，内容延伸到屏幕边缘；阅读页采用 Immersive Mode，从边缘上滑可临时唤出"
+                android:text="•  系统栏全透明：非阅读页采用 Edge-to-Edge，内容延伸到屏幕边缘；阅读页采用 Immersive Mode，默认隐藏菜单栏"
                 android:textSize="14sp"
                 android:lineSpacingExtra="3dp"
                 android:layout_marginBottom="8dp" />
@@ -227,6 +227,14 @@
                 android:lineSpacingExtra="3dp"
                 android:layout_marginBottom="8dp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  减小行间距，增大可用高度，使阅读段落更紧凑"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
             <!-- 修复 -->
             <TextView
                 android:layout_width="wrap_content"
@@ -241,6 +249,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="•  大量修复布局瑕疵"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  使沉浸模式能适配全面屏"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  修复了导入成功后点击“开始阅读”时的崩溃问题"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="•  修复了横竖屏切换时的崩溃问题"
                 android:textSize="14sp"
                 android:lineSpacingExtra="3dp"
                 android:layout_marginBottom="8dp" />

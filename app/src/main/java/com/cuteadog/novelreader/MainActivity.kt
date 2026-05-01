@@ -16,26 +16,27 @@ import com.cuteadog.novelreader.ui.system.SystemUiHelper
 import com.cuteadog.novelreader.ui.theme.ThemeManager
 import com.cuteadog.novelreader.ui.theme.ThemePalette
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageButton
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import androidx.core.content.edit
+import androidx.core.graphics.drawable.toDrawable
 
 class MainActivity : AppCompatActivity() {
 
@@ -327,13 +328,38 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /** 将当前主题色应用到 android.app.AlertDialog 弹窗 */
+    @SuppressLint("DiscouragedApi")
+    private fun applyThemeToDialog(dialog: android.app.AlertDialog) {
+        val palette = ThemeManager.currentPalette()
+
+        // 对话窗口背景色
+        dialog.window?.setBackgroundDrawable(palette.surfaceBg.toDrawable())
+
+        // 标题文字（兼容两种 ID：alertTitle 用于 AppCompat/Material 主题，title 用于原生主题）
+        dialog.findViewById<TextView>(android.R.id.title)?.setTextColor(palette.textPrimary)
+        // alertTitle 是 AppCompat 内部 ID，通过资源查找动态获取
+        val alertTitleId = resources.getIdentifier("alertTitle", "id", "android")
+        if (alertTitleId != 0) {
+            dialog.findViewById<TextView>(alertTitleId)?.setTextColor(palette.textPrimary)
+        }
+
+        // 消息内容
+        dialog.findViewById<TextView>(android.R.id.message)?.setTextColor(palette.textPrimary)
+
+        // 按钮文字
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE)?.setTextColor(palette.buttonFg)
+        dialog.getButton(DialogInterface.BUTTON_NEGATIVE)?.setTextColor(palette.buttonFg)
+        dialog.getButton(DialogInterface.BUTTON_NEUTRAL)?.setTextColor(palette.buttonFg)
+    }
+
     private fun showImportTip() {
         // 检查是否首次启动
         val sharedPreferences = getSharedPreferences("novel_reader_prefs", MODE_PRIVATE)
         val isFirstLaunch = sharedPreferences.getBoolean("is_first_launch", true)
 
         if (isFirstLaunch) {
-            AlertDialog.Builder(this)
+            val dialog = android.app.AlertDialog.Builder(this)
                 .setTitle("📚 欢迎使用小说阅读器")
                 .setMessage("""
 您可以通过以下方式导入小说：
@@ -353,6 +379,7 @@ class MainActivity : AppCompatActivity() {
                     sharedPreferences.edit { putBoolean("is_first_launch", false) }
                 }
                 .show()
+            applyThemeToDialog(dialog)
         }
     }
 
@@ -392,19 +419,25 @@ class MainActivity : AppCompatActivity() {
 祝您阅读愉快！
         """.trimIndent()
 
-        android.app.AlertDialog.Builder(this)
+        val dialog = android.app.AlertDialog.Builder(this)
             .setTitle("🎉 导入成功")
             .setMessage(successMessage)
             .setPositiveButton("开始阅读") { _, _ ->
-                // 直接跳转到阅读器
+                // 根据风味选择正确的阅读器 Activity
+                val readerActivityClass = if (BuildConfig.ENABLE_NOTES_HIGHLIGHT) {
+                    Class.forName("com.cuteadog.novelreader.ui.reader.ReaderActivityOpen")
+                } else {
+                    com.cuteadog.novelreader.ui.reader.ReaderActivity::class.java
+                }
                 startActivity(
-                    Intent(this, com.cuteadog.novelreader.ui.reader.ReaderActivity::class.java).apply {
+                    Intent(this, readerActivityClass).apply {
                         putExtra(com.cuteadog.novelreader.ui.reader.ReaderActivity.EXTRA_NOVEL, novel)
                     }
                 )
             }
             .setNegativeButton("稍后阅读", null)
             .show()
+        applyThemeToDialog(dialog)
     }
 
     private fun showImportErrorDialog(errorMessage: String) {
@@ -428,7 +461,7 @@ class MainActivity : AppCompatActivity() {
                 "解决方案：\n1. 检查文件夹结构\n2. 确保文件格式正确\n3. 尝试重新导入"
         }
 
-        android.app.AlertDialog.Builder(this)
+        val dialog = android.app.AlertDialog.Builder(this)
             .setTitle("❌ 导入失败")
             .setMessage("""
 $errorMessage
@@ -454,6 +487,7 @@ $errorMessage
                 showImportGuide()
             }
             .show()
+        applyThemeToDialog(dialog)
     }
 
     private fun getCurrentTime(): String {
@@ -462,7 +496,7 @@ $errorMessage
     }
 
     private fun showImportGuide() {
-        android.app.AlertDialog.Builder(this)
+        val dialog = android.app.AlertDialog.Builder(this)
             .setTitle("小说导入完全指南")
             .setMessage("""
 📚 小说导入指南
@@ -506,5 +540,6 @@ $errorMessage
             """.trimIndent())
             .setPositiveButton("我知道了", null)
             .show()
+        applyThemeToDialog(dialog)
     }
 }

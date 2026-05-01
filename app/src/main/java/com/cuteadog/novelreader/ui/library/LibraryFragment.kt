@@ -30,8 +30,21 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class LibraryFragment(
-    private val novelRepository: NovelRepository
+    private var novelRepository: NovelRepository? = null
 ) : Fragment() {
+
+    /**
+     * 安全的 repository 访问器。
+     * - 当被 MainActivity 创建时，novelRepository 由构造函数注入。
+     * - 当横竖屏切换被 FragmentManager 重建时，novelRepository 为 null，
+     *   则从 Application 懒加载创建一个新的。
+     */
+    private val safeNovelRepository: NovelRepository
+        get() = novelRepository ?: run {
+            val dataStore = (requireActivity().application as MyApplication).dataStore
+            val novelDao = com.cuteadog.novelreader.data.dao.NovelDao(dataStore)
+            NovelRepository(novelDao).also { novelRepository = it }
+        }
 
     /** 从 StorageLocationManager 读取最新目录，跟随用户切换储存位置后立刻生效。 */
     private fun currentNovelsDir(): String =
@@ -148,7 +161,7 @@ class LibraryFragment(
     private fun observeNovels() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                novelRepository.novels.collectLatest { novels ->
+                safeNovelRepository.novels.collectLatest { novels ->
                     this@LibraryFragment.novels = novels
                     updateAdapter()
                     updateEmptyState()
@@ -210,7 +223,7 @@ class LibraryFragment(
         binding.btnImport.text = getString(R.string.import_novel)
 
         lifecycleScope.launch {
-            novelRepository.clearNovelSelections()
+            safeNovelRepository.clearNovelSelections()
         }
 
         updateAdapter()
@@ -226,7 +239,7 @@ class LibraryFragment(
 
     private fun toggleNovelSelection(novel: Novel) {
         lifecycleScope.launch {
-            novelRepository.updateNovelSelection(novel.id, !novel.isSelected)
+            safeNovelRepository.updateNovelSelection(novel.id, !novel.isSelected)
         }
     }
 
@@ -247,7 +260,7 @@ class LibraryFragment(
                 }
             }
 
-            novelRepository.deleteSelectedNovels(java.io.File(currentNovelsDir()))
+            safeNovelRepository.deleteSelectedNovels(java.io.File(currentNovelsDir()))
             exitSelectionMode()
             Toast.makeText(requireContext(), "已删除选中的小说", Toast.LENGTH_SHORT).show()
         }

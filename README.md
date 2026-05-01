@@ -1,3 +1,5 @@
+#### [Switch to English](README_EN.md)
+
 # YQreader 小说阅读应用
 
 一款专为阅读.txt文件和做笔记而设计的本地阅读应用。
